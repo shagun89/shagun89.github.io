@@ -20,12 +20,12 @@ function getCommonHeaders(params = {}) {
   var accessToken, headers = {};
   if(!params.token) {
     accessToken = getCookie('token');
-      // accessToken = "08f08f23-d6ce-4659-aa93-2d2fa420e306";
+      // accessToken = 
   } else {
     accessToken = params.token;
   }
   headers = {
-    'Authorization': accessToken,
+    'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFrcml0aSIsImV4cCI6MTU1OTc5ODA4MH0.MUtLs3q6hgO56Nnlj9CYmDyt0yMj6XtvNvy1hUoBKCDKK6Fa23CGRAUk5xAytCAFTctW7Rmhi4itnPdGCNqCVg',
   };
   if(params.user && params.user.defaultLocation) {
     headers.Locations = params.user.defaultLocation;
