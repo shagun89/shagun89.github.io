@@ -81,13 +81,17 @@ export default function (state = initialState, action) {
                 return{...state,
                     formData : action.formData
                 }
-        case Constants.UPDATE_TOGGLE:
+        case Constants.EXPAND_TOGGLE:
                 return {...state,
-                    openUpdate :  action.openUpdate
+                    expanded :  action.expanded
                 }
         case Constants.RECEIVED_DATA:
                 return {...state,
                     receiveData :  action.receiveData
+                }
+        case Constants.EDIT_TASK:
+                return {...state,
+                    edit :  action.edit
                 }
         default:
             return state;

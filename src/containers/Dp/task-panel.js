@@ -6,7 +6,8 @@ import AddIcon from '@material-ui/icons/Add';
 import AddTaskForm from './taskForm';
 import { Modal } from 'react-bootstrap';
 import TaskCard from './card';
-import { handleOpen, handleClose, getData , postFormdata} from './actions.js';
+import { handleOpen, handleClose, getData} from './actions.js';
+import { set } from 'immutable';
 
 const button_style = {
     margin: '0px',
@@ -27,18 +28,25 @@ const button = {
 
 class Task extends React.Component{
 
-    renderDivdata = (str) => {
-        console.log(str);
-        return(
-            
-            this.props.formData.status === str ? this.props.formData.title : ''
-        )
+
+    componentDidMount(){
+        this.props.getData()
     }
     
-    // }
     render() {
         console.log("task propsL: ",this.props);
-        console.log(this.props.formData && this.props.formData.status == 'Rejected' ? true : false)
+        
+        var taskData;
+        // 
+        // setTimeout(() => {
+            
+        //     this.props.formData ? taskData = this.props.formData.data.map(function(elem){
+        //         console.log("In task panel: " + elem["title"])
+        //         return elem
+        //         }) :
+        //         taskData = null
+        // }, 3000)
+        
         return (
         <div className="wrapper">
         <header className="clear">
@@ -52,28 +60,66 @@ class Task extends React.Component{
           
         </header>
         
-        {/* <section id="dashboard" className="dashboard clear">
-          <div id="rejected" className="rejected"></div>
-          <div id="pending" className="pending">thee</div>
-          <div id="development" className="development">yh</div>
-          <div id="testing" className="testing">hy</div>
-          <div id="production" className="production">hb</div>
-        </section> */}
-        <div className="row">
+  <div className="row">
   <div className="column rejected" >
-  {this.props.receiveData && this.props.receiveData["status"] == 'REJECTED' ? <TaskCard title = {this.props.receiveData["title"]} description = {this.props.receiveData["description"]}/> : ''}
+  {
+     this.props.formData ? 
+     this.props.formData.map(function(elem){
+        if(elem["status"] == "REJECTED")
+            return <TaskCard title = {elem["title"]} description = {elem["description"]} id = {elem["id"]} />
+        else
+         return ''
+     }) :
+     ''
+  }
   </div>
   <div className="column pending" >
-  {this.props.receiveData && this.props.receiveData["status"] == 'PENDING' ? <TaskCard title = {this.props.receiveData["title"]} description = {this.props.receiveData.description}/> : ''}
+  {
+      this.props.formData ? 
+      this.props.formData.map(function(elem){
+         if(elem["status"] == "PENDING")
+             return <TaskCard title = {elem["title"]} description = {elem["description"]} id = {elem["id"]}/>
+         else
+          return ''
+      }) :
+      ''
+  }
   </div>
   <div className="column development" >
-  {this.props.receiveData && this.props.receiveData["status"] == 'DEVELOPMENT' ? <TaskCard title = {this.props.receiveData["title"]} description = {this.props.receiveData.description}/> : ''}
+  {
+      this.props.formData ? 
+      this.props.formData.map(function(elem){
+         if(elem["status"] == "DEVELOPMENT")
+             return <TaskCard title = {elem["title"]} description = {elem["description"]} id = {elem["id"]} />
+         else
+          return ''
+      }) :
+      ''
+  }
   </div>
   <div className="column testing" >
-  {this.props.receiveData && this.props.receiveData["status"] == 'TESTING' ? <TaskCard title = {this.props.receiveData["title"]} description = {this.props.receiveData.description}/> : ''}
+  {
+      this.props.formData ? 
+      this.props.formData.map(function(elem){
+         if(elem["status"] == "TESTING")
+             return <TaskCard title = {elem["title"]} description = {elem["description"]} id = {elem["id"]}/>
+         else
+          return ''
+      }) :
+      ''
+  }
   </div>
   <div className="column production" >
-  {this.props.receiveData && this.props.receiveData["status"] == 'PRODUCTION' ? <TaskCard title = {this.props.receiveData["title"]} description = {this.props.receiveData.description}/> : ''}
+  {
+      this.props.formData ? 
+      this.props.formData.map(function(elem){
+         if(elem["status"] == "PRODUCTION")
+             return <TaskCard title = {elem["title"]} description = {elem["description"]} id = {elem["id"]} />
+         else
+          return ''
+      }) :
+      ''
+  }
   </div>
 </div>
         <div id="page-container">
@@ -122,7 +168,7 @@ class Task extends React.Component{
             <Modal.Title>Create New Task</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-              <AddTaskForm status = {this.props.taskStatus} dataHandler = {this.props.postFormdata}
+              <AddTaskForm status = {this.props.taskStatus} dataHandler = {this.props.getData}
               
               />
           </Modal.Body>
@@ -138,11 +184,11 @@ const mapStateToProps = state => ({
     openForm: state.postReducer.openForm,
     taskStatus: state.postReducer.taskStatus,
     formData :  state.postReducer.formData,
-    receiveData : state.postReducer.receiveData
+    
     
 })
 
-export default connect(mapStateToProps, { handleOpen, handleClose, getData, postFormdata })(Task);
+export default connect(mapStateToProps, { handleOpen, handleClose, getData })(Task);
 
 // Unsimplified Route Planning
 // Create a script for maintaining planned routes for distinct stations and dispatch points

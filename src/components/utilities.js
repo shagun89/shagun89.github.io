@@ -25,7 +25,7 @@ function getCommonHeaders(params = {}) {
     accessToken = params.token;
   }
   headers = {
-    'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFrcml0aSIsImV4cCI6MTU1OTc5ODA4MH0.MUtLs3q6hgO56Nnlj9CYmDyt0yMj6XtvNvy1hUoBKCDKK6Fa23CGRAUk5xAytCAFTctW7Rmhi4itnPdGCNqCVg',
+    'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbnVyYWciLCJleHAiOjE1NTk4OTAyNDB9.DzA2KRKqkXPqeLQ9D7V_J1ln8za69VyjC6urRBKn82doX8HW_EV8TOydHC4Axe9_gexb11jqiLmvY93YBre9Zg',
   };
   if(params.user && params.user.defaultLocation) {
     headers.Locations = params.user.defaultLocation;

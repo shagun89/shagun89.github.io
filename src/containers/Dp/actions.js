@@ -103,33 +103,55 @@ export function handleOnClose(value){
 }
 }
 
-
-export function handleUpdateOpen(value){
+export function handleExpandClick(value){
   console.log("value in action: ",value);
   return (dispatch) => {
     dispatch({
-        type : Constants.UPDATE_TOGGLE,
-        openUpdate: value
+        type : Constants.EXPAND_TOGGLE,
+        expanded: value
     });
 }
 }
 
-export function handleUpdateClose(value){
-  console.log("value in action: ",value);
+export function handleEditClick(value){
+  console.log("value in action of edit click: ",value);
+  
   return (dispatch) => {
     dispatch({
-        type : Constants.UPDATE_TOGGLE,
-        openUpdate: value
-    });
+      type : Constants.EDIT_TASK,
+      edit: value
+  });
 }
+    
 }
+
+
+// export function handleUpdateOpen(value){
+//   console.log("value in action: ",value);
+//   return (dispatch) => {
+//     dispatch({
+//         type : Constants.UPDATE_TOGGLE,
+//         expanded: value
+//     });
+// }
+// }
+
+// export function handleUpdateClose(value){
+//   console.log("value in action: ",value);
+//   return (dispatch) => {
+//     dispatch({
+//         type : Constants.UPDATE_TOGGLE,
+//         expanded: value
+//     });
+// }
+
 
 export function postFormdata (submitData) {
   console.log("value in action: ",submitData);
   return (dispatch) => {
     var url = 'http://192.168.36.64:8080/user/tasks';
     let options = {
-      'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFrcml0aSIsImV4cCI6MTU1OTc5ODA4MH0.MUtLs3q6hgO56Nnlj9CYmDyt0yMj6XtvNvy1hUoBKCDKK6Fa23CGRAUk5xAytCAFTctW7Rmhi4itnPdGCNqCVg',
+      'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbnVyYWciLCJleHAiOjE1NTk4OTAyNDB9.DzA2KRKqkXPqeLQ9D7V_J1ln8za69VyjC6urRBKn82doX8HW_EV8TOydHC4Axe9_gexb11jqiLmvY93YBre9Zg',
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
   }
@@ -137,7 +159,7 @@ export function postFormdata (submitData) {
   
     promise.then((response) => {
       
-      console.log(response.data["title"]);
+      console.log(response.data);
 
       dispatch({
         type : Constants.RECEIVED_DATA,
@@ -149,24 +171,7 @@ export function postFormdata (submitData) {
     
 }
 
-export function getData(){
-  console.log("value in action: ",value);
-  return (dispatch) => {
-    var url = 'http://192.168.36.64:8080/user/tasks';
-    let options = {
-      'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFrcml0aSIsImV4cCI6MTU1OTc5ODA4MH0.MUtLs3q6hgO56Nnlj9CYmDyt0yMj6XtvNvy1hUoBKCDKK6Fa23CGRAUk5xAytCAFTctW7Rmhi4itnPdGCNqCVg',
-      'Access-Control-Allow-Origin': '*',
-      "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
-  }
-  var promise = doHttpGet(url, options);
-   promise.then((response) => {
-    dispatch({
-      type : Constants.FORM_DATA,
-      formData: response
-  });
-   })
-}
-}
+
 // const headers = {
 //   'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFrcml0aSIsImV4cCI6MTU1OTc5ODA4MH0.MUtLs3q6hgO56Nnlj9CYmDyt0yMj6XtvNvy1hUoBKCDKK6Fa23CGRAUk5xAytCAFTctW7Rmhi4itnPdGCNqCVg',
 //   'Access-Control-Allow-Origin': '*',
@@ -181,3 +186,27 @@ export function getData(){
 // }
 }
 
+export function getData(){
+  
+  return (dispatch) => {
+    var url = 'http://192.168.36.64:8080/user/tasks';
+    let options = {
+      'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFrcml0aSIsImV4cCI6MTU1OTc5ODA4MH0.MUtLs3q6hgO56Nnlj9CYmDyt0yMj6XtvNvy1hUoBKCDKK6Fa23CGRAUk5xAytCAFTctW7Rmhi4itnPdGCNqCVg',
+      'Access-Control-Allow-Origin': '*',
+      "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
+  }
+  var promise = doHttpGet(url, options);
+   promise.then((response) => {
+    var newArr = [];
+    response.data.forEach(element => {
+      element["editStatus"] = false;
+      element["expandStatus"] = false;
+      newArr.push(element);
+    });
+    dispatch({
+      type : Constants.FORM_DATA,
+      formData: newArr
+  });
+   })
+}
+}

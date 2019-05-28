@@ -2,17 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Input from '@material-ui/core/Input';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import FormLabel from '@material-ui/core/FormLabel';
 import './styles.scss';
-import { handleChangeDesc, handleChangeTitle, handleChangeStatus} from './actions.js';
+import { handleChangeDesc, handleChangeTitle} from './actions.js';
 import TaskCard from './card';
 
 
@@ -55,33 +46,22 @@ class UpdateTaskForm extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        var data = {
-            title : this.props.title,
-            description : this.props.description,
-            status : this.props.stat
-        }
-        alert('Submitted data ' + this.props.title + ' ' + this.props.description + ' ' + this.props.stat);
-        this.props.dataHandler(data);
+        alert('Submitted data ' + this.props.title + ' ' + this.props.description);
         
     } 
     
   render() {
-    
-        // const [selectedValue, setSelectedValue] = React.useState('a');
-      
-        function handleChange(event) {
-          setSelectedValue(event.target.value);
-        }
+    console.log("Update props: " + this.props.taskId);
     return (
       
       <form style={container} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
       
       <div>
-        <TextField
+        <TextField 
           id="standard-name"
           label="Title"
           style={textField}
-          value = {this.props.title}
+          value = {this.props.prevTitle}
           onChange={(event) => this.props.handleChangeTitle(event.target.value)}
           margin="normal"
         />
@@ -91,38 +71,14 @@ class UpdateTaskForm extends React.Component {
           id="standard-uncontrolled"
           label="Description"
           name="description"
-          value = {this.props.description}
+          value = {this.props.prevDesc}
           multiline = {true}
           style={textField}
           onChange={(event) => this.props.handleChangeDesc(event.target.value)}
           margin="normal"
         />
       </div>
-      <div style={push_down}>
-
-      <FormControl style={formControl}>
-      <FormLabel component="legend">Status</FormLabel>
-        {/* <InputLabel htmlFor="age-simple">Status</InputLabel> */}
-        <Select
-        value =  {this.props.stat}   
-        onChange = {(event) => this.props.handleChangeStatus(event.target.value)}
-          inputProps={{
-            name: 'age',
-            id: 'age-simple',
-          }}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={"Rejected"}>Rejected</MenuItem>
-          <MenuItem value={"Pending"}>Pending</MenuItem>
-          <MenuItem value={"Development"}>Development</MenuItem>
-          <MenuItem value={"Testing"}>Testing</MenuItem>
-          <MenuItem value={"Production"}>Production</MenuItem>
-        </Select>
-      </FormControl>
-
-      </div>
+      
       <div>
         
         <Button variant= "contained" color="primary" style={button} type="submit">Save</Button>
@@ -136,8 +92,8 @@ class UpdateTaskForm extends React.Component {
 const mapStateToProps = state => ({
     title: state.postReducer.title,
     description: state.postReducer.description,
-    stat : state.postReducer.stat
+    
 })
 
-export default connect(mapStateToProps, { handleChangeTitle, handleChangeDesc, handleChangeStatus })(UpdateTaskForm);
+export default connect(mapStateToProps, { handleChangeTitle, handleChangeDesc })(UpdateTaskForm);
 

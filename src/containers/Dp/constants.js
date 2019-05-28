@@ -19,8 +19,9 @@ export const Constants = keyMirror({
     STATUS_CHANGE : null,
     TOGGLE_CLOSE: null,
     FORM_DATA : [],
-    UPDATE_TOGGLE : null,
-    RECEIVED_DATA : null
+    EXPAND_TOGGLE : null,
+    RECEIVED_DATA : null,
+    EDIT_TASK : null
 });
 
 // const headers = {

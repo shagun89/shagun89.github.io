@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { handleChangeDesc, handleChangeStatus, handleChangeTitle, handleOnClose} from './actions.js';
+import { handleChangeDesc, handleChangeStatus, handleChangeTitle, handleOnClose, postFormdata} from './actions.js';
 
 
 const container = {
@@ -64,12 +64,15 @@ class AddTaskForm extends React.Component {
         description : this.props.description,
         status: this.props.status
     }
-    alert('Submitted data ' + this.props.title + ' ' + this.props.description + ' ' + this.props.status);
-    this.props.dataHandler(data)
+    this.props.postFormdata(data);
+    setTimeout(() => {console.log(this.props.receiveData)}, 3000);
+    
+    // alert('Submitted data ' + this.props.receiveData["title"] + ' ' + this.props.receiveData["description"] + ' ' + this.props.receiveData["status"]);
+    
 } 
 
   render() {
-//    console.log('Props received: ' + this.props.stat + ' ' + this.props.status)
+
 
     return (
       
@@ -122,10 +125,11 @@ const mapStateToProps = state => ({
   title: state.postReducer.title,
   description: state.postReducer.description,
   stat: state.postReducer.stat,
-  toggle :  state.postReducer.toggle
+  toggle :  state.postReducer.toggle,
+  receiveData : state.postReducer.receiveData
 })
 
-export default connect(mapStateToProps, { handleChangeTitle, handleChangeDesc, handleChangeStatus, handleOnClose })(AddTaskForm);
+export default connect(mapStateToProps, { handleChangeTitle, handleChangeDesc, handleChangeStatus, handleOnClose, postFormdata })(AddTaskForm);
 
 // export default (AddTaskForm);
 
