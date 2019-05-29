@@ -63,60 +63,45 @@ class Task extends React.Component{
   <div className="row">
   <div className="column rejected" >
   {
-     this.props.formData ? 
-     this.props.formData.map(function(elem){
-        if(elem["status"] == "REJECTED")
-            return <TaskCard title = {elem["title"]} description = {elem["description"]} id = {elem["id"]} />
-        else
-         return ''
-     }) :
-     ''
+     this.props.formData.REJECTED ? 
+     this.props.formData.REJECTED.map(function(elem){
+        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
+      }) :
+      ''
   }
   </div>
   <div className="column pending" >
   {
-      this.props.formData ? 
-      this.props.formData.map(function(elem){
-         if(elem["status"] == "PENDING")
-             return <TaskCard title = {elem["title"]} description = {elem["description"]} id = {elem["id"]}/>
-         else
-          return ''
+      this.props.formData.PENDING ? 
+      this.props.formData.PENDING.map(function(elem){
+        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
       }) :
       ''
   }
   </div>
   <div className="column development" >
   {
-      this.props.formData ? 
-      this.props.formData.map(function(elem){
-         if(elem["status"] == "DEVELOPMENT")
-             return <TaskCard title = {elem["title"]} description = {elem["description"]} id = {elem["id"]} />
-         else
-          return ''
+      this.props.formData.DEVELOPMENT ? 
+      this.props.formData.DEVELOPMENT.map(function(elem){
+        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
       }) :
       ''
   }
   </div>
   <div className="column testing" >
   {
-      this.props.formData ? 
-      this.props.formData.map(function(elem){
-         if(elem["status"] == "TESTING")
-             return <TaskCard title = {elem["title"]} description = {elem["description"]} id = {elem["id"]}/>
-         else
-          return ''
+      this.props.formData.TESTING ? 
+      this.props.formData.TESTING.map(function(elem){
+        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
       }) :
       ''
   }
   </div>
   <div className="column production" >
   {
-      this.props.formData ? 
-      this.props.formData.map(function(elem){
-         if(elem["status"] == "PRODUCTION")
-             return <TaskCard title = {elem["title"]} description = {elem["description"]} id = {elem["id"]} />
-         else
-          return ''
+      this.props.formData.PRODUCTION ? 
+      this.props.formData.PRODUCTION.map(function(elem){
+        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
       }) :
       ''
   }

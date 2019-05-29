@@ -21,7 +21,12 @@ export const Constants = keyMirror({
     FORM_DATA : [],
     EXPAND_TOGGLE : null,
     RECEIVED_DATA : null,
-    EDIT_TASK : null
+    EDIT_TASK : null,
+    // REJECTED_TASKS : [],
+    // PENDING_TASKS : [],
+    // DEVELOPMENT_TASKS : [],
+    // TESTING_TASKS : [],
+    // PRODUCTION_TASKS : [],
 });
 
 // const headers = {

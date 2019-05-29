@@ -99,14 +99,9 @@ class TaskCard extends React.Component {
         subheader="created At"
       />
       <CardActions disableSpacing>
-        <IconButton aria-label="Update" onClick={(event) => {
-            this.props.handleEditClick(!this.props.edit);
-            // var targetObj = this.props.formData.map(function(elem){
-            //     if(elem["id"] == this.props.id)
-            //         return elem;
-            // })
-            // targetObj[0]["editStatus"]=true;
-            
+        <IconButton aria-label="Update" onClick={() => {
+            this.props.handleEditClick(!this.props.edit);    
+            // this.props.editStat = true;        
         }} value="abc">
           <CreateIcon />
         </IconButton>
@@ -117,7 +112,7 @@ class TaskCard extends React.Component {
         //   className={clsx(classes.expand, {
         //     [classes.expandOpen]: this.props.expanded,
         //   })}
-         style = {{transform: 'rotate(180deg)', marginLeft: 'auto'}}
+          style = {{transform: 'rotate(180deg)', marginLeft: 'auto'}}
           onClick={() => this.props.handleExpandClick(!this.props.expanded)}
           aria-expanded={this.props.expanded}
           aria-label="Show more"
@@ -135,7 +130,10 @@ class TaskCard extends React.Component {
       </Collapse>
     </Card>
     
-    <Modal show={this.props.edit} onHide={()=>{this.props.handleEditClick(!this.props.edit)}}>
+    <Modal show={this.props.edit} onHide={()=>{
+    this.props.handleEditClick(!this.props.edit)
+    
+    }}>
     <Modal.Header closeButton>
      <Modal.Title >Edit Task</Modal.Title>
      </Modal.Header>

@@ -125,7 +125,7 @@ const mapStateToProps = state => ({
   title: state.postReducer.title,
   description: state.postReducer.description,
   stat: state.postReducer.stat,
-  toggle :  state.postReducer.toggle,
+  toggle : state.postReducer.toggle,
   receiveData : state.postReducer.receiveData
 })
 

@@ -187,9 +187,10 @@ export function postFormdata (submitData) {
 }
 
 export function getData(){
-  
+
   return (dispatch) => {
-    var url = 'http://192.168.36.64:8080/user/tasks';
+    // var url = 'http://192.168.36.64:8080/user/tasks';
+    var url = 'https://api.jsonbin.io/b/5cee25c83581160bd897450d';
     let options = {
       'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFrcml0aSIsImV4cCI6MTU1OTc5ODA4MH0.MUtLs3q6hgO56Nnlj9CYmDyt0yMj6XtvNvy1hUoBKCDKK6Fa23CGRAUk5xAytCAFTctW7Rmhi4itnPdGCNqCVg',
       'Access-Control-Allow-Origin': '*',
@@ -198,14 +199,14 @@ export function getData(){
   var promise = doHttpGet(url, options);
    promise.then((response) => {
     var newArr = [];
-    response.data.forEach(element => {
-      element["editStatus"] = false;
-      element["expandStatus"] = false;
+    response.data.PENDING.forEach(element => {
+      element.editStatus = false;
+      element.expandStatus = false;
       newArr.push(element);
     });
     dispatch({
       type : Constants.FORM_DATA,
-      formData: newArr
+      formData: response.data
   });
    })
 }

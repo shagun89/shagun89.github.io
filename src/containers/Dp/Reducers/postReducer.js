@@ -8,7 +8,14 @@ const initialState = {
     // visibility:false,
     // divState: null,
     addanchorEl: null,
-    anchorEl: null
+    anchorEl: null,
+    edit: null,
+    formData : [],
+    rejected : [],
+    pending : [],
+    development : [],
+    testing : [],
+    production : []
 };
 
 export default function (state = initialState, action) {
@@ -79,7 +86,11 @@ export default function (state = initialState, action) {
                 }
         case Constants.FORM_DATA:
                 return{...state,
-                    formData : action.formData
+                    formData : action.formData,
+                    rejected :  action.rejected,
+                    pending :  action.pending,
+                    development :  action.development,
+                    testing :  action.testing
                 }
         case Constants.EXPAND_TOGGLE:
                 return {...state,
@@ -93,6 +104,7 @@ export default function (state = initialState, action) {
                 return {...state,
                     edit :  action.edit
                 }
+        
         default:
             return state;
     }
