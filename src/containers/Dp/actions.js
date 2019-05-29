@@ -125,27 +125,6 @@ export function handleEditClick(value){
     
 }
 
-
-// export function handleUpdateOpen(value){
-//   console.log("value in action: ",value);
-//   return (dispatch) => {
-//     dispatch({
-//         type : Constants.UPDATE_TOGGLE,
-//         expanded: value
-//     });
-// }
-// }
-
-// export function handleUpdateClose(value){
-//   console.log("value in action: ",value);
-//   return (dispatch) => {
-//     dispatch({
-//         type : Constants.UPDATE_TOGGLE,
-//         expanded: value
-//     });
-// }
-
-
 export function postFormdata (submitData) {
   console.log("value in action: ",submitData);
   return (dispatch) => {
@@ -198,15 +177,40 @@ export function getData(){
   }
   var promise = doHttpGet(url, options);
    promise.then((response) => {
-    var newArr = [];
+    var rej = [], pend = [], dev = [], test = [], prod = [];
     response.data.PENDING.forEach(element => {
       element.editStatus = false;
       element.expandStatus = false;
-      newArr.push(element);
+      pend.push(element);
+    });
+    response.data.REJECTED.forEach(element => {
+      element.editStatus = false;
+      element.expandStatus = false;
+      rej.push(element);
+    });
+    response.data.DEVELOPMENT.forEach(element => {
+      element.editStatus = false;
+      element.expandStatus = false;
+      dev.push(element);
+    });
+    response.data.TESTING.forEach(element => {
+      element.editStatus = false;
+      element.expandStatus = false;
+      test.push(element);
+    });
+    response.data.PRODUCTION.forEach(element => {
+      element.editStatus = false;
+      element.expandStatus = false;
+      prod.push(element);
     });
     dispatch({
       type : Constants.FORM_DATA,
-      formData: response.data
+      formData: response.data,
+      rejected: rej,
+      pending: pend,
+      development: dev,
+      testing: test,
+      production: prod
   });
    })
 }

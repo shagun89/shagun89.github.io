@@ -81,6 +81,7 @@ class TaskCard extends React.Component {
     
     render() {
         console.log("card props: ", this.props);
+
         return (
     <div>
       <Card style = {{maxWidth: 400}}>
@@ -98,11 +99,27 @@ class TaskCard extends React.Component {
         title={this.props.title}
         subheader="created At"
       />
-      <CardActions disableSpacing>
+      <CardActions >
         <IconButton aria-label="Update" onClick={() => {
-            this.props.handleEditClick(!this.props.edit);    
-            // this.props.editStat = true;        
-        }} value="abc">
+            // this.props.handleEditClick(!this.props.edit);    
+            console.log("Inside onclick: " + this.props.title); 
+            <Modal show={true} onHide={()=>{
+                this.props.handleEditClick(false)
+                
+                }}>
+                <Modal.Header closeButton>
+                 <Modal.Title >Edit Task</Modal.Title>
+                 </Modal.Header>
+                 <Modal.Body >
+                    <UpdateTaskForm
+                        prevTitle = {this.props.title}
+                        prevDesc = {this.props.description}
+                        taskId = {this.props.id}
+                    />
+                </Modal.Body>
+            
+            </Modal>  
+        }}>
           <CreateIcon />
         </IconButton>
         <IconButton aria-label="Share">
@@ -130,8 +147,8 @@ class TaskCard extends React.Component {
       </Collapse>
     </Card>
     
-    <Modal show={this.props.edit} onHide={()=>{
-    this.props.handleEditClick(!this.props.edit)
+    {/* <Modal show={this.props.edit} onHide={()=>{
+    this.props.handleEditClick(false)
     
     }}>
     <Modal.Header closeButton>
@@ -145,7 +162,7 @@ class TaskCard extends React.Component {
         />
     </Modal.Body>
 
-    </Modal>
+    </Modal> */}
     </div>
         );
     }

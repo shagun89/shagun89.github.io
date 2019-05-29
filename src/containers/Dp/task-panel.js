@@ -63,17 +63,17 @@ class Task extends React.Component{
   <div className="row">
   <div className="column rejected" >
   {
-     this.props.formData.REJECTED ? 
-     this.props.formData.REJECTED.map(function(elem){
-        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
+     this.props.rejected ? 
+     this.props.rejected.map(function(elem){
+        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id} stat = {elem.editStatus}/>
       }) :
       ''
   }
   </div>
   <div className="column pending" >
   {
-      this.props.formData.PENDING ? 
-      this.props.formData.PENDING.map(function(elem){
+      this.props.pending ? 
+      this.props.pending.map(function(elem){
         return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
       }) :
       ''
@@ -81,8 +81,8 @@ class Task extends React.Component{
   </div>
   <div className="column development" >
   {
-      this.props.formData.DEVELOPMENT ? 
-      this.props.formData.DEVELOPMENT.map(function(elem){
+      this.props.development ? 
+      this.props.development.map(function(elem){
         return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
       }) :
       ''
@@ -90,8 +90,8 @@ class Task extends React.Component{
   </div>
   <div className="column testing" >
   {
-      this.props.formData.TESTING ? 
-      this.props.formData.TESTING.map(function(elem){
+      this.props.testing ? 
+      this.props.testing.map(function(elem){
         return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
       }) :
       ''
@@ -99,8 +99,8 @@ class Task extends React.Component{
   </div>
   <div className="column production" >
   {
-      this.props.formData.PRODUCTION ? 
-      this.props.formData.PRODUCTION.map(function(elem){
+      this.props.production ? 
+      this.props.production.map(function(elem){
         return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
       }) :
       ''
@@ -169,8 +169,11 @@ const mapStateToProps = state => ({
     openForm: state.postReducer.openForm,
     taskStatus: state.postReducer.taskStatus,
     formData :  state.postReducer.formData,
-    
-    
+    rejected :  state.postReducer.rejected,
+    pending :  state.postReducer.pending,
+    testing :  state.postReducer.testing,
+    development :  state.postReducer.development,
+    production :  state.postReducer.production
 })
 
 export default connect(mapStateToProps, { handleOpen, handleClose, getData })(Task);
