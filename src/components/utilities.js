@@ -18,14 +18,16 @@ function getCookie(cname) {
 
 function getCommonHeaders(params = {}) {
   var accessToken, headers = {};
-  if(!params.token) {
+  if(!params.access_token) {
     accessToken = getCookie('token');
-      // accessToken = 
+
   } else {
-    accessToken = params.token;
+    accessToken = params.access_token;
   }
+  console.log("inside utilities: "+ accessToken)
+  
   headers = {
-    'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbnVyYWciLCJleHAiOjE1NTk4OTAyNDB9.DzA2KRKqkXPqeLQ9D7V_J1ln8za69VyjC6urRBKn82doX8HW_EV8TOydHC4Axe9_gexb11jqiLmvY93YBre9Zg',
+    'access_token': ""+accessToken
   };
   if(params.user && params.user.defaultLocation) {
     headers.Locations = params.user.defaultLocation;
@@ -66,7 +68,8 @@ function doHttpPut(url, content, options) {
 function doHttpDelete(url, content, options) {
   options = options || {};
   options.headers = Object.assign(options.headers || {}, getCommonHeaders(options));
-  options['data'] = content;
+  // options['data'] = content;
+
   return axios.delete(url,options);
 }
 

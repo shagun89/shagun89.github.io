@@ -15,7 +15,16 @@ const initialState = {
     pending : [],
     development : [],
     testing : [],
-    production : []
+    production : [],
+    specificId: null,
+    selectedElement: null,
+    updateData: {},
+    deleteData: null,
+    loginData: null,
+    registerData : null,
+    isRegister :  null,
+    isLogin : null,
+    token : null
 };
 
 export default function (state = initialState, action) {
@@ -90,11 +99,19 @@ export default function (state = initialState, action) {
                     rejected :  action.rejected,
                     pending :  action.pending,
                     development :  action.development,
-                    testing :  action.testing
+                    testing :  action.testing,
+                    production: action.production
                 }
         case Constants.EXPAND_TOGGLE:
                 return {...state,
-                    expanded :  action.expanded
+                    expanded :  action.expanded,
+                    selectedElement: action.selectedElement,
+                    allElements: action.allElements,
+                    rejected :  action.rejected,
+                    pending :  action.pending,
+                    development :  action.development,
+                    testing :  action.testing,
+                    production: action.production
                 }
         case Constants.RECEIVED_DATA:
                 return {...state,
@@ -102,7 +119,40 @@ export default function (state = initialState, action) {
                 }
         case Constants.EDIT_TASK:
                 return {...state,
-                    edit :  action.edit
+                    edit :  action.edit,
+                    selectedElement: action.selectedElement,
+                    rejected :  action.rejected,
+                    pending :  action.pending,
+                    development :  action.development,
+                    testing :  action.testing,
+                    production: action.production
+                }
+        case Constants.UPDATED_DATA:
+                return {...state,
+                    updateData :  action.updateData
+                }
+        case Constants.DELETED_DATA:
+                return {...state,
+                    deleteData :  action.deleteData
+                }
+        case Constants.LOGIN:
+                return {...state,
+                    loginData :  action.loginData,
+                    token: action.token
+                }
+        case Constants.REGISTER:
+                return {...state,
+                    registerData :  action.registerData,
+                    
+                }
+        case Constants.SHOW_REGISTER:
+                return {...state,
+                    isRegister :  action.isRegister,
+                    
+                }
+        case Constants.SHOW_LOGIN:
+                return {...state,
+                    isLogin :  action.isLogin,
                 }
         
         default:

@@ -8,6 +8,7 @@ import { Modal } from 'react-bootstrap';
 import TaskCard from './card';
 import { handleOpen, handleClose, getData} from './actions.js';
 import { set } from 'immutable';
+import { white } from 'material-ui/styles/colors';
 
 const button_style = {
     margin: '0px',
@@ -30,7 +31,7 @@ class Task extends React.Component{
 
 
     componentDidMount(){
-        this.props.getData()
+        this.props.getData(this.props.token)
     }
     
     render() {
@@ -49,7 +50,7 @@ class Task extends React.Component{
         
         return (
         <div className="wrapper">
-        <header className="clear">
+        {/* <header className="clear">
           <ul>
             <li>Rejected</li>
             <li>Pending</li>
@@ -58,58 +59,143 @@ class Task extends React.Component{
             <li>Production</li>
           </ul>
           
-        </header>
-        
-  <div className="row">
-  <div className="column rejected" >
-  {
-     this.props.rejected ? 
-     this.props.rejected.map(function(elem){
-        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id} stat = {elem.editStatus}/>
-      }) :
-      ''
-  }
-  </div>
-  <div className="column pending" >
-  {
-      this.props.pending ? 
-      this.props.pending.map(function(elem){
-        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
-      }) :
-      ''
-  }
-  </div>
-  <div className="column development" >
-  {
-      this.props.development ? 
-      this.props.development.map(function(elem){
-        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
-      }) :
-      ''
-  }
-  </div>
-  <div className="column testing" >
-  {
-      this.props.testing ? 
-      this.props.testing.map(function(elem){
-        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
-      }) :
-      ''
-  }
-  </div>
-  <div className="column production" >
-  {
-      this.props.production ? 
-      this.props.production.map(function(elem){
-        return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id}/>
-      }) :
-      ''
-  }
-  </div>
-</div>
-        <div id="page-container">
+        </header> */}
+       
+        <div class="col-sm-12 abc">
+    <div class="row">
+      <div class="col-sm-7 five-three">
+        <div class="row">
+          <div class="col-sm-4 ">
+          REJECTED
+          <hr className="line"></hr>
+          <div >
+          {
+                this.props.rejected ? 
+                this.props.rejected.map(function(elem){
+                    return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id} element = {elem}/>
+                }) :
+                ''
+            }
+          </div>
           
-          <footer id= "footer">
+          </div>
+          <div class="col-sm-4 ">
+          PENDING
+          <hr className="line"></hr>
+          <div>
+          {
+            this.props.pending ? 
+            this.props.pending.map(function(elem){
+                return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id} element = {elem}/>
+            }) :
+            ''
+        }
+          </div>
+          </div>
+          <div class="col-sm-4 " style={{textAlign:"center"}}>
+          DEVELOPMENT
+          <hr className="line"></hr>
+          <div>
+          {
+            this.props.development ? 
+            this.props.development.map(function(elem){
+                return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id} element = {elem}/>
+            }) :
+            ''
+          }
+          </div>
+          
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5 five-two">
+        <div class="row">
+          <div class="col-sm-6 ">
+            TESTING
+            <hr className="line"></hr>
+            <div>
+            {
+            this.props.testing ? 
+            this.props.testing.map(function(elem){
+                return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id} element = {elem}/>
+            }) :
+            ''
+            }
+            </div>
+            
+          </div>
+          <div class="col-sm-6 ">
+          PRODUCTION
+          <hr className="line"></hr>
+          <div>
+          {
+                this.props.production ? 
+                this.props.production.map(function(elem){
+                    return <TaskCard title = {elem.title} description = {elem.description} id = {elem.id} element = {elem}/>
+                }) :
+                ''
+         }
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>​
+ </div>
+
+
+ 
+    <div>
+        <footer class="page-footer font-small fixed-bottom">
+
+        <div class="col-sm-12">
+        <div class="row">
+        <div class="col-sm-7 five-three">
+            <div class="row">
+            <div class="col-sm-4 ">
+            <Button variant="contained"  onClick={() => {this.props.handleOpen(true, 'REJECTED')}}>
+            <AddIcon style={leftIcon} />
+            Add a task
+            </Button>    
+            </div>
+            <div class="col-sm-4 ">
+            <Button variant="contained" onClick={() => {this.props.handleOpen(true, 'PENDING')}}>
+            <AddIcon style={leftIcon} />
+            Add a task
+            </Button>
+            </div>
+            <div class="col-sm-4 " style={{textAlign:"center"}}>
+            <Button variant="contained" onClick={() => {this.props.handleOpen(true, 'DEVELOPMENT')}}>
+            <AddIcon style={leftIcon} />
+            Add a task
+            </Button>
+            </div>
+            </div>
+        </div>
+        <div class="col-sm-5 five-two">
+            <div class="row">
+            <div class="col-sm-6 ">
+            <Button variant="contained"  onClick={() => {this.props.handleOpen(true, 'TESTING')}}>
+            <AddIcon style={leftIcon} />
+            Add a task
+            </Button>
+            </div>
+            <div class="col-sm-6 ">
+            <Button variant="contained"  onClick={() => {this.props.handleOpen(true, 'PRODUCTION')}}>
+            <AddIcon style={leftIcon} />
+            Add a task
+            </Button>
+            </div>
+            </div>
+        </div>
+        </div>​
+        
+ </div>
+
+ </footer>  
+
+        
+          
+          {/* <footer class="page-footer font-small fixed-bottom">
           <ul>
             <li>
             <Button variant="contained"  style= {button_style} onClick={() => {this.props.handleOpen(true, 'REJECTED')}}>
@@ -135,17 +221,9 @@ class Task extends React.Component{
             Add a task
             </Button></li>
           </ul>
-          </footer>
+          </footer> */}
         </div>
         
-{/*       
-        <Modal 
-        show={this.props.openForm} onHide={() => {this.props.handleClose(false)}}
-        >
-        {console.log(this.props.openForm)}
-        <AddTaskForm  />
-        getData = {this.props.getData}
-        </Modal> */}
 
 <Modal show={this.props.openForm} onHide={()=>{this.props.handleClose(false)}}>
         
@@ -173,7 +251,9 @@ const mapStateToProps = state => ({
     pending :  state.postReducer.pending,
     testing :  state.postReducer.testing,
     development :  state.postReducer.development,
-    production :  state.postReducer.production
+    production :  state.postReducer.production,
+    updateData: state.postReducer.updateData,
+    token: state.postReducer.token
 })
 
 export default connect(mapStateToProps, { handleOpen, handleClose, getData })(Task);

@@ -22,11 +22,13 @@ export const Constants = keyMirror({
     EXPAND_TOGGLE : null,
     RECEIVED_DATA : null,
     EDIT_TASK : null,
-    // REJECTED_TASKS : [],
-    // PENDING_TASKS : [],
-    // DEVELOPMENT_TASKS : [],
-    // TESTING_TASKS : [],
-    // PRODUCTION_TASKS : [],
+    UPDATED_DATA: null,
+    DELETED_DATA: null,
+    LOGIN: null,
+    REGISTER : null,
+    SHOW_REGISTER : null,
+    SHOW_LOGIN : null,
+    AUTH_TOKEN : null
 });
 
 // const headers = {

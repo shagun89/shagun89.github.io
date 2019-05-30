@@ -30,12 +30,38 @@ $grad-end: #004e92;
 //     color: $primary-color;
 //     font-size: 14px;
 //   }
+.abc {
+  height: 50;
+  background-color: #292C2D;
+  text-align: center;
+  color: white;
+  margin-top:35px ;
+  padding-top: 15px
+}
+.raised {
+  background-color: #292C2D !important;
+  color: white;
+  margin: 15
+}
+.line {
+  color: #ffffff;
+  background-color: #ffffff;
+}
+.page-footer {
+  background-color: #292C2D;
+  
+  text-align: center;
+  color: white;
+  padding-top: 20px
+  
+}
 .column {
   float: left;
   width: 20%;
   height: 100%;
   border-right: 1px solid $base-color;
   border-left: 1px solid $base-color;
+  border-bottom: 1px solid $base-color;
   text-align: center;
 }
 
@@ -286,3 +312,25 @@ header {
   border-radius: 1rem;
   padding: 1
 }
+
+
+$height:400px;
+body{width:100%;height:700px;margin:0;padding:0;}
+#space > div{width:500px;margin:auto;margin-top:10%;font-family: 'Roboto', sans-serif;}
+
+#signup,#login{width:100%;background:#2c3e50;}
+#signup{height:$height;} #login{height:$height / 2;}
+.yellow{background-color:gold;}
+
+#buttons{height:100px;background:#2c3e50;}
+#buttons > p {width:49.95%;float:left;color:white;text-align:center;padding-top:25px;height:75%;margin:0;}
+#buttons > p:hover{background:#f1c40f;color:#2c3e50;cursor:pointer;}
+#signup > input, #signup > button{margin-top:20px;margin-left:105px;height:25px;border:none;border-radius:2px;}
+#first,#last,#confirm{width:250px;}
+#email{width:175px;}
+#password{width:125px;margin-left:6px !important;}
+
+
+#login > #email,#login > #password,#login >button{width:250px;margin-left:125px !important;margin-top:20px;height:25px;}
+
+

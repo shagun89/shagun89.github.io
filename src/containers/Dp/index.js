@@ -3,176 +3,41 @@ import { connect } from 'react-redux';
 import { handleAddMenuClose, handleMenuClose, handleAddMenuOpen, handleProfileMenuOpen } from './actions.js';
 import './styles.scss';
 import styles from './styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-
-
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import AddIcon from '@material-ui/icons/Add';
-import Dropdown from 'react-bootstrap/Dropdown'
 import { darkWhite } from 'material-ui/styles/colors';
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav';
+import {Form, FormControl, Button, NavDropdown} from 'react-bootstrap';
 import Task from './task-panel';
-
-
-const search_style = {
-    position: 'relative',
-    borderRadius: '2px',
-    backgroundColor: fade(darkWhite, 0.15),
-    '&:hover': {
-      backgroundColor: fade(darkWhite, 0.25),
-    },
-    marginRight: '5px',
-    marginLeft: 0,
-    width: '30%',
-}
-
-const search_icon = {
-  width: '20px',
-  height: '100%',
-  position: 'absolute',
-  marginRight: '10px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}
-const menuButton = {
-  marginLeft: -12,
-  marginRight: 20,
-}
-const input_style = {
-  color: 'inherit',
-  width: '100%',
-  marginRight: '10px',
-  paddingRight: '50px',
-  paddingLeft: '10px'
-}
-const title = {
-  marginRight : '10px'
-}
-const grow = {
-  flexGrow : 1,
-  display: 'flex'
-}
-const add_button = {
-  marginLeft: 'auto'
-}
 
 
 class Dp extends Component {
 
   render() {
     console.log("props :", this.props);
-    console.log("styles: " ,styles);
-    const isMenuOpen = this.props.anchorEl;
-    const isAddMenuOpen= this.props.addanchorEl;
-
-    const renderAddMenu = (
-      <Menu
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={isAddMenuOpen}
-          onClose = {() => {this.props.handleAddMenuClose(null)}}
-          >
-          <MenuItem onClick= {() => this.props.handleAddMenuClose(null)}>Add New Sprint</MenuItem>
-          <MenuItem onClick= {() => this.props.handleAddMenuClose(null)}>Add New Board</MenuItem>
-      </Menu>
-    );
-    
-    const renderMenu = (
-      <Menu
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={this.props.anchorEl}
-        onClose = {() => {this.props.handleMenuClose(null)}}
-      >
-        <MenuItem onClick= {() => this.props.handleMenuClose(null)}>Profile</MenuItem>
-        <MenuItem onClick= {() => this.props.handleMenuClose(null)}>My account</MenuItem>
-      </Menu>
-    );
-  
     
     return (
-    //   <div>
-    //     Obelix dashboard..
-    //    <button className="hyy" onClick={() => { this.props.Test(this.props.test + 5) }}>hyy</button>
-    //     <button onClick={() => { this.props.ApiCall() }}>ApiCall</button>
-    //     <button onClick={() => { this.props.postApiCall() }}>Post api call</button>
-    //     {console.log("visi:", this.props.visibility)}
-    //     {this.props.visibility &&
-    //       <div className="full-loader">
-    //         <div className="relative">
-    //           <div className="abs" id='full-screen-loader-wrapper'>
-    //             <CircularProgress size={50} thickness={5} />
-    //           </div>
-    //         </div>
-    //       </div>
-    //     }
-    // {this.props.divState ?
-    //     <div>i am here <button onClick={()=>{this.props.openDiv(false)}}>close</button></div> :
-    //     <p>bye</p>
-    // }
-
-    //     <button onClick={()=>{this.props.openDiv(true)}}> open</button>
-    //   </div>
     <div>
-      
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton style = {menuButton} color="inherit" aria-label="Open drawer">
-              <MenuIcon />
-            </IconButton>
-            <Typography style = {title} variant="h6" color="inherit" noWrap>
-              SCRUM BOARD
-            </Typography>
-            <div style={search_style}>
-              <div style={search_icon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                className="input_style"
-                placeholder="Search card, tasks..."
-              />
-            </div>
-            <div />
-            <div style = {grow} >
-            
-              <IconButton aria-owns={isAddMenuOpen ? 'material-appbar' : undefined}
-                aria-haspopup="true"
-                onClick={() => this.props.handleAddMenuOpen(true)}
-                color="inherit"
-                style = {add_button}>
-              <AddIcon />
-              </IconButton> 
-              <IconButton
-                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                aria-haspopup="true"
-                onClick={
-                  ()=>{
-                  this.props.handleProfileMenuOpen(true)}
-                 }
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBar>
-        {isAddMenuOpen && 
-          renderAddMenu
-        }
-        {isMenuOpen &&
-          renderMenu
-        }
-        
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
+            <Navbar.Brand href="#home">Scrum-Board</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="mr-auto">
+              <Form inline>
+              <FormControl type="text" placeholder="Search tasks, cards ..." className="mr-sm-2" />
+              <Button variant="outline-info">Search</Button>
+               </Form>
+              </Nav>
+              <Nav>
+              <NavDropdown title="Account" id="collasible-nav-dropdown">
+              <NavDropdown.Item>Profile</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item>Logout</NavDropdown.Item>
+               </NavDropdown>
+              </Nav>
+            </Navbar.Collapse>
+        </Navbar>;
         <Task />
     </div>   
     );
@@ -181,19 +46,9 @@ class Dp extends Component {
 
 
 const mapStateToProps = state => ({
-  // test: state.postReducer.test,
-  // response: state.postReducer.response,
-  // Postresponse: state.postReducer.Postresponse,
-  // visibility: state.postReducer.visibility,
-  // divState: state.postReducer.divState,
   anchorEl: state.postReducer.anchorEl,
   addanchorEl : state.postReducer.addanchorEl,
 })
 
-// App.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-
-// Test, ApiCall, postApiCall, openDiv,
 export default connect(mapStateToProps, { handleAddMenuClose, handleMenuClose, handleAddMenuOpen, handleProfileMenuOpen })(Dp);
 
