@@ -68,8 +68,6 @@ function doHttpPut(url, content, options) {
 function doHttpDelete(url, options) {
   options = options || {};
   options.headers = Object.assign(options.headers || {}, getCommonHeaders(options));
-  // options['data'] = content;
-
   return axios.delete(url,options);
 }
 
