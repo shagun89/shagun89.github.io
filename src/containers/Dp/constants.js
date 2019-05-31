@@ -37,7 +37,7 @@ export const Constants = keyMirror({
 //   "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
 // };
 // return (dispatch) => {
-//   axios.get('http://192.168.10.118:8080/user/tasks1',{headers})
+//   axios.get('http://192.168.36.64:8080/user/tasks1',{headers})
 //   .then(function(response){
 //     console.log(response.data); // ex.: { user: 'Your User'}
 //     console.log(response.status); // ex.: 200

@@ -252,7 +252,7 @@ export function handleEditClick(value, selectedElement, allElements){
 export function postFormdata (submitData, token) {
   console.log("value in action: ",submitData);
   return (dispatch) => {
-    var url = 'http://192.168.10.118:8080/user/tasks';
+    var url = 'http://192.168.36.64:8080/user/tasks';
     let options = {
       'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
@@ -289,7 +289,7 @@ export function postFormdata (submitData, token) {
 //   "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
 // };
 // return (dispatch) => {
-//   axios.get('http://192.168.10.118:8080/user/tasks',{headers})
+//   axios.get('http://192.168.36.64:8080/user/tasks',{headers})
 //   .then(function(response){
 //     console.log(response.data); // ex.: { user: 'Your User'}
 //     console.log(response.status); // ex.: 200
@@ -300,7 +300,7 @@ export function postFormdata (submitData, token) {
 export function getData(token){
 
   return (dispatch) => {
-     var url = 'http://192.168.10.118:8080/user/tasks';
+     var url = 'http://192.168.36.64:8080/user/tasks';
     //var url = 'https://api.jsonbin.io/b/5cef5fb1b12ce73bdabf323c';
     let options = {
       'access_token': ""+ls.get('token'),
@@ -362,7 +362,7 @@ export function getData(token){
 export function updateFormdata (submitData, id, token) {
   console.log("value in action of update task api: ",submitData);
   return (dispatch) => {
-    var url = 'http://192.168.10.118:8080/user/tasks/' + id;
+    var url = 'http://192.168.36.64:8080/user/tasks/' + id;
     let options = {
       'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
@@ -395,7 +395,7 @@ export function updateFormdata (submitData, id, token) {
 export function deleteFormdata (id, token) {
   // console.log("value in action of update task api: ",submitData);
   return (dispatch) => {
-    var url = 'http://192.168.10.118:8080/user/tasks/' + id;
+    var url = 'http://192.168.36.64:8080/user/tasks/' + id;
     let options = {
       'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
@@ -430,7 +430,7 @@ export function handleLoginClick(user, pass) {
     var data = {
       "credentials":Buffer.from(user + ":" + pass).toString('base64')
     }
-    var url = 'http://192.168.10.118:8080/login';
+    var url = 'http://192.168.36.64:8080/login';
     let options = {
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
@@ -464,7 +464,7 @@ export function handleRegisterClick(user, pass) {
   }
   console.log("Register data: ", data);
   return (dispatch) => {
-    var url = 'http://192.168.10.118:8080/user/sign-up';
+    var url = 'http://192.168.36.64:8080/user/sign-up';
     let options = {
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
