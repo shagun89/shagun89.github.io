@@ -22,13 +22,15 @@ import { Modal } from 'react-bootstrap';
 import UpdateTaskForm from './update-form';
 import { black } from 'material-ui/styles/colors';
 
-class TaskCard extends React.Component {
 
+class TaskCard extends React.Component {
+    
   render() {
     console.log("Task card Props: ", this.props);
 
     return (
       <div style={{paddingTop:2}}>
+      
         <Card style={{ maxWidth: 400, borderBottom: black }}>
           <CardHeader
             avatar={
@@ -98,6 +100,7 @@ const mapStateToProps = state => ({
   edit: state.postReducer.edit,
   selectedElement: state.postReducer.selectedElement,
   formData: state.postReducer.formData,
-  token: state.postReducer.token
+  token: state.postReducer.token,
+
 })
 export default connect(mapStateToProps, { handleExpandClick, handleEditClick, deleteFormdata, getData })(TaskCard);

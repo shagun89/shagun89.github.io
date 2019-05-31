@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleAddMenuClose, handleMenuClose, handleAddMenuOpen, handleProfileMenuOpen } from './actions.js';
+import { handleAddMenuClose, handleMenuClose, handleAddMenuOpen, handleProfileMenuOpen, showRegister } from './actions.js';
 import './styles.scss';
 import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
@@ -10,7 +10,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav';
 import {Form, FormControl, Button, NavDropdown} from 'react-bootstrap';
 import Task from './task-panel';
-
+import ls from 'local-storage';
 
 class Dp extends Component {
 
@@ -30,7 +30,7 @@ class Dp extends Component {
                </Form>
               </Nav>
               <Nav>
-              <NavDropdown title="Account" id="collasible-nav-dropdown">
+              <NavDropdown title="Account" id="collasible-nav-dropdown" onSelect = {() => {ls.remove('token');this.props.showRegister(this.props.isRegister)}}>
               <NavDropdown.Item>Profile</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item>Logout</NavDropdown.Item>
@@ -48,7 +48,8 @@ class Dp extends Component {
 const mapStateToProps = state => ({
   anchorEl: state.postReducer.anchorEl,
   addanchorEl : state.postReducer.addanchorEl,
+  isRegister : state.postReducer.isRegister,
 })
 
-export default connect(mapStateToProps, { handleAddMenuClose, handleMenuClose, handleAddMenuOpen, handleProfileMenuOpen })(Dp);
+export default connect(mapStateToProps, { handleAddMenuClose, handleMenuClose, handleAddMenuOpen, handleProfileMenuOpen, showRegister})(Dp);
 

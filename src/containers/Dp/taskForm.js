@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { handleChangeDesc, handleChangeStatus, handleChangeTitle, handleOnClose, postFormdata, getData, handleClose} from './actions.js';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const container = {
     display: 'flex',
@@ -39,23 +41,20 @@ const button_clear = {
 
 
 class AddTaskForm extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+    open : true
+    }
+   }
+   handleClose = (event, reason) =>  {
+    if (reason === 'clickaway') {
+      return;
+    }
 
-//   state = {
-    
-//     title: '',
-//     description: '',
-//     stat: ''
-//   };
+    this.setState({open:false});
+  }
 
-//   handleChange = title => event => {
-//     this.setState({ [title]: event.target.value });
-//   };
-//   handleChange = description => event => {
-//     this.setState({ [description]: event.target.value });
-//   };
-//   handleChangeStatus = stat => event => {
-//     this.setState({ [stat]: this.props.status });
-//   };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -65,6 +64,7 @@ class AddTaskForm extends React.Component {
         status: this.props.status
     }
     this.props.postFormdata(data, this.props.token);
+    
     this.props.getData(this.props.token);
     this.props.handleClose(false);
     setTimeout(() => {console.log(this.props.receiveData)}, 3000);
@@ -82,6 +82,7 @@ class AddTaskForm extends React.Component {
       
       <div>
         <TextField
+          required
           id="standard-name"
           label="Title"
           style={textField}
@@ -92,6 +93,7 @@ class AddTaskForm extends React.Component {
       </div>
       <div>
         <TextField
+          required
           id="standard-uncontrolled"
           label="Description"
           name="description"
@@ -102,6 +104,7 @@ class AddTaskForm extends React.Component {
           margin="normal"
         />
       </div>
+      
       <div>
         <TextField
           id="standard-name"
@@ -129,7 +132,8 @@ const mapStateToProps = state => ({
   stat: state.postReducer.stat,
   toggle : state.postReducer.toggle,
   receiveData : state.postReducer.receiveData,
-  token: state.postReducer.token
+  token: state.postReducer.token,
+  
 })
 
 export default connect(mapStateToProps, { handleChangeTitle, handleChangeDesc, handleChangeStatus, handleOnClose, postFormdata, getData, handleClose })(AddTaskForm);

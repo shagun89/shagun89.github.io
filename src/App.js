@@ -11,7 +11,7 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path='/' component={Register} />
-            <Route exact path='/shagun:email' component={abc} />
+            
 
           </Switch>
         </div>

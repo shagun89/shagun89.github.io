@@ -24,7 +24,8 @@ const initialState = {
     registerData : null,
     isRegister :  null,
     isLogin : null,
-    token : null
+    token : null,
+    isError : null
 };
 
 export default function (state = initialState, action) {
@@ -100,7 +101,8 @@ export default function (state = initialState, action) {
                     pending :  action.pending,
                     development :  action.development,
                     testing :  action.testing,
-                    production: action.production
+                    production: action.production,
+                    
                 }
         case Constants.EXPAND_TOGGLE:
                 return {...state,
@@ -115,7 +117,8 @@ export default function (state = initialState, action) {
                 }
         case Constants.RECEIVED_DATA:
                 return {...state,
-                    receiveData :  action.receiveData
+                    receiveData :  action.receiveData,
+                    isError : action.isError
                 }
         case Constants.EDIT_TASK:
                 return {...state,
@@ -129,21 +132,24 @@ export default function (state = initialState, action) {
                 }
         case Constants.UPDATED_DATA:
                 return {...state,
-                    updateData :  action.updateData
+                    updateData :  action.updateData,
+                    isError : action.isError
                 }
         case Constants.DELETED_DATA:
                 return {...state,
-                    deleteData :  action.deleteData
+                    deleteData :  action.deleteData,
+                    isError : action.isError
                 }
         case Constants.LOGIN:
                 return {...state,
                     loginData :  action.loginData,
-                    token: action.token
+                    token: action.token,
+                    isError : action.isError
                 }
         case Constants.REGISTER:
                 return {...state,
                     registerData :  action.registerData,
-                    
+                    isError : action.isError
                 }
         case Constants.SHOW_REGISTER:
                 return {...state,
@@ -153,6 +159,7 @@ export default function (state = initialState, action) {
         case Constants.SHOW_LOGIN:
                 return {...state,
                     isLogin :  action.isLogin,
+                    
                 }
         
         default:

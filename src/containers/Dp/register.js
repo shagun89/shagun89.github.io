@@ -7,7 +7,7 @@ import {handleRegisterClick, handleLoginClick, showRegister} from './actions';
 import { connect } from 'react-redux';
 import Login from './login';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
+import ls from 'local-storage';
 
 const muiTheme = getMuiTheme({
     palette: {
@@ -26,7 +26,7 @@ class Register extends Component {
   }
   render() {
     return (
-     (this.props.isRegister)?<Login /> :
+     (ls.get('token')|| this.props.isRegister)?<Login /> :
       <div style={{margin:"0 auto"}}>
         <div style={{textAlign:"center", margin:"0 auto"}}> 
                 <MuiThemeProvider muiTheme={muiTheme}>

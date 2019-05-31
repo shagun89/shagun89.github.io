@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import './styles.scss';
 import { handleChangeDesc, handleChangeTitle, handleChangeStatus, updateFormdata, getData, handleEditClick} from './actions.js';
-import TaskCard from './card';
 
 
 const container = {
@@ -44,6 +43,7 @@ const formControl = {
 
 class UpdateTaskForm extends React.Component {
 
+
     handleSubmit = (event) => {
         event.preventDefault();
         var data = {
@@ -62,7 +62,7 @@ class UpdateTaskForm extends React.Component {
     return (
       
       <form style={container} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-      
+    
       <div>
         <TextField 
           id="standard-name"
@@ -116,7 +116,8 @@ const mapStateToProps = state => ({
     stat: state.postReducer.stat,
     edit: state.postReducer.edit,
     formData: state.postReducer.formData,
-    token: state.postReducer.token
+    token: state.postReducer.token,
+   
 })
 
 export default connect(mapStateToProps, { handleChangeTitle, handleChangeDesc, handleChangeStatus, updateFormdata, getData, handleEditClick })(UpdateTaskForm);

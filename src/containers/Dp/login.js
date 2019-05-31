@@ -5,22 +5,69 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {handleLoginClick, showLogin} from './actions';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { connect } from 'react-redux';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import Dp from './index';
+import ls from 'local-storage';
 
 class Login extends Component {
 constructor(props){
   super(props);
   this.state={
   username:'',
-  password:''
+  password:'',
+  open : true
   }
  }
+
+ handleClose = (event, reason) =>  {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      this.setState({open:false});
+    }
 render() {
+   console.log("Iserror: " + this.props.isError)
     return (
-      (this.props.loginData)? <Dp /> :
+      (ls.get('token'))? <Dp /> : 
+        
       <div>
+      {this.props.isError && <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      open={this.state.open}
+      autoHideDuration={6000}
+      onClose={this.handleClose}
+      ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Error msg</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+      
+    >
+      {/* <SnackbarContent
+        onClose={this.handleClose}
+        variant="error"
+        message="Login Credentials invalid!!"
+        
+      /> */}
+    </Snackbar>
+      }
       <div style={{textAlign:"center", margin:"0 auto"}}>
         <MuiThemeProvider>
           <div>
@@ -60,6 +107,7 @@ const style = {
 
 const mapStateToProps = state => ({
       loginData: state.postReducer.loginData ,
-      isLogin : state.postReducer.isLogin
+      isLogin : state.postReducer.isLogin,
+      isError: state.postReducer.isError
 })
 export default connect(mapStateToProps, { handleLoginClick, showLogin })(Login);

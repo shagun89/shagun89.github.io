@@ -1,6 +1,7 @@
 import { Constants } from './constants';
 import axios from 'axios';
 import {doHttpPost, doHttpGet, doHttpPut, doHttpDelete} from '../../components/utilities.js';
+import ls from 'local-storage';
 
 export function handleMenuClose(value){
   return (dispatch) => {
@@ -253,7 +254,7 @@ export function postFormdata (submitData, token) {
   return (dispatch) => {
     var url = 'http://192.168.36.64:8080/user/tasks';
     let options = {
-      'access_token': ""+token,
+      'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
   }
@@ -262,13 +263,19 @@ export function postFormdata (submitData, token) {
     promise.then((response) => {
       
       console.log(response.data);
-      this.getData(token);
+      this.getData(ls.get('token'));
       dispatch({
         type : Constants.RECEIVED_DATA,
-        receiveData: response.data
+        receiveData: response.data,
+        isError: null
     });
     }, (error) => {
       console.log('Some error occured: ' + error);
+      dispatch({
+        type : Constants.RECEIVED_DATA,
+        isError: error,
+        
+    });
     })
     
 }
@@ -296,7 +303,7 @@ export function getData(token){
      var url = 'http://192.168.36.64:8080/user/tasks';
     //var url = 'https://api.jsonbin.io/b/5cef5fb1b12ce73bdabf323c';
     let options = {
-      'access_token': ""+token,
+      'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
     }
@@ -338,10 +345,18 @@ export function getData(token){
       pending: pend,
       development: dev,
       testing: test,
-      production: prod
+      production: prod,
+      // isError: null
+      });
+  }, (error) => {
+    console.log('Some error occured: ' + error);
+    dispatch({
+      type : Constants.FORM_DATA,
+      // isError: error,
+      
   });
-   })
-}
+  })
+ }
 }
 
 export function updateFormdata (submitData, id, token) {
@@ -349,7 +364,7 @@ export function updateFormdata (submitData, id, token) {
   return (dispatch) => {
     var url = 'http://192.168.36.64:8080/user/tasks/' + id;
     let options = {
-      'access_token': ""+token,
+      'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept",
       "Access-Control-Allow-Methods" : "GET,HEAD,POST,PUT,DELETE"
@@ -359,13 +374,19 @@ export function updateFormdata (submitData, id, token) {
     promise.then((response) => {
       
       console.log("UPDATE SUCCESSFUL: "+response.data);
-      this.getData(token);
+      this.getData(ls.get('token'));
       dispatch({
         type : Constants.UPDATED_DATA,
-        updateData: response.data
+        updateData: response.data,
+        isError: null
     });
     }, (error) => {
       console.log('Some error occured: ' + error);
+      dispatch({
+        type : Constants.UPDATED_DATA,
+        isError: error,
+        
+    });
     })
     
   }
@@ -376,22 +397,28 @@ export function deleteFormdata (id, token) {
   return (dispatch) => {
     var url = 'http://192.168.36.64:8080/user/tasks/' + id;
     let options = {
-      'access_token': ""+token,
+      'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
   }
     var promise = doHttpDelete(url, options);
     
     promise.then((response) => {
-      this.getData(token);
+      this.getData(ls.get('token'));
       dispatch({
         type : Constants.DELETED_DATA,
-        deleteData: response.data
+        deleteData: response.data,
+        isError: null
     });
           
    
     }, (error) => {
       console.log('Some error occured: ' + error);
+      dispatch({
+        type : Constants.DELETED_DATA,
+        isError: error,
+        
+    });
     })
     
   }
@@ -412,14 +439,20 @@ export function handleLoginClick(user, pass) {
     
     promise.then((response) => {
       console.log("Response from login: " + response.headers.authorization);
+      ls.set('token',response.headers.authorization);
       dispatch({
         type : Constants.LOGIN,
         loginData: response,
-        token : response.headers.authorization
+        token : ls.get('token') || '',
+        isError: null
     });
     }, (error) => {
       console.log('Some error occured: ' + error);
-
+      dispatch({
+        type : Constants.LOGIN,
+        isError: error,
+        
+      });
     })
     
   }
@@ -429,7 +462,7 @@ export function handleRegisterClick(user, pass) {
   var data = {
     "credentials":Buffer.from(user + ":" + pass).toString('base64')
   }
-  
+  console.log("Register data: ", data);
   return (dispatch) => {
     var url = 'http://192.168.36.64:8080/user/sign-up';
     let options = {
@@ -442,10 +475,15 @@ export function handleRegisterClick(user, pass) {
       dispatch({
         type : Constants.REGISTER,
         registerData: response,
-        
+        isError : null
     });
     }, (error) => {
       console.log('Some error occured: ' + error);
+      dispatch({
+        type : Constants.REGISTER,
+        isError: error,
+        
+    });
     })
     
   }
@@ -470,12 +508,3 @@ export function showLogin(value){
 }
 }
 
-// export function showRegister(value){
-  
-//   return (dispatch) => {
-//     dispatch({
-//         type : Constants.SHOW_REGISTER,
-//         isRegister: !value
-//     });
-// }
-// }
