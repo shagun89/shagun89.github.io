@@ -69,7 +69,6 @@ class UpdateTaskForm extends React.Component {
           label="Title"
           name="title"
           style={textField}
-        //   value = {this.props.prevTitle}
           placeholder={this.props.prevTitle}
           onChange={(event) => this.props.handleChangeTitle(event.target.value)}
           margin="normal"
@@ -80,8 +79,7 @@ class UpdateTaskForm extends React.Component {
           id="standard-uncontrolled"
           label="Description"
           name="description"
-        //   value = {this.props.prevDesc}
-         placeholder ={this.props.prevDesc}
+          placeholder ={this.props.prevDesc}
           multiline = {true}
           style={textField}
           onChange={(event) => this.props.handleChangeDesc(event.target.value)}
@@ -94,8 +92,7 @@ class UpdateTaskForm extends React.Component {
           label="Status"
           name="stat"
           style={textField}
-        //   value={this.props.status}
-         placeholder={this.props.prevStatus}
+          placeholder={this.props.prevStatus}
           onChange={(event) => this.props.handleChangeStatus(event.target.value)}
           margin="normal"
         />

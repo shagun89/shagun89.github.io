@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleAddMenuClose, handleMenuClose, handleAddMenuOpen, handleProfileMenuOpen, showRegister } from './actions.js';
+import { showRegister, searchData, giveOtherTasks, logoutScrum } from './actions.js';
 import './styles.scss';
-import styles from './styles';
-import { withStyles } from '@material-ui/core/styles';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import { darkWhite } from 'material-ui/styles/colors';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav';
 import {Form, FormControl, Button, NavDropdown} from 'react-bootstrap';
@@ -13,7 +9,25 @@ import Task from './task-panel';
 import ls from 'local-storage';
 
 class Dp extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      searchVal: ""
+    }
+   }
 
+  handleAction = (evt) => {
+    if(evt == "logout")
+    {
+      this.props.logoutScrum();
+      ls.remove('token'); 
+      this.props.showRegister(this.props.isRegister);
+    }
+    else
+    {
+      this.props.giveOtherTasks();
+    }
+  }
   render() {
     console.log("props :", this.props);
     
@@ -24,16 +38,16 @@ class Dp extends Component {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
-              <Form inline>
+              <Form inline onChange = {(event) => this.setState({searchVal:event.target.value})}>
               <FormControl type="text" placeholder="Search tasks, cards ..." className="mr-sm-2" />
-              <Button variant="outline-info">Search</Button>
+              <Button variant="outline-info" onClick={()=>this.props.searchData(this.state.searchVal)}>Search</Button>
                </Form>
               </Nav>
               <Nav>
-              <NavDropdown title="Account" id="collasible-nav-dropdown" onSelect = {() => {ls.remove('token');this.props.showRegister(this.props.isRegister)}}>
-              <NavDropdown.Item>Profile</NavDropdown.Item>
+              <NavDropdown title="Account" id="collasible-nav-dropdown" onSelect = {(event) => this.handleAction(event)}>
+              <NavDropdown.Item eventKey="mytasks">Alloted Tasks</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item>Logout</NavDropdown.Item>
+              <NavDropdown.Item eventKey="logout">Logout</NavDropdown.Item>
                </NavDropdown>
               </Nav>
             </Navbar.Collapse>
@@ -46,9 +60,7 @@ class Dp extends Component {
 
 
 const mapStateToProps = state => ({
-  anchorEl: state.postReducer.anchorEl,
-  addanchorEl : state.postReducer.addanchorEl,
   isRegister : state.postReducer.isRegister,
 })
 
-export default connect(mapStateToProps, { handleAddMenuClose, handleMenuClose, handleAddMenuOpen, handleProfileMenuOpen, showRegister})(Dp);
+export default connect(mapStateToProps, {showRegister, searchData, giveOtherTasks, logoutScrum})(Dp);

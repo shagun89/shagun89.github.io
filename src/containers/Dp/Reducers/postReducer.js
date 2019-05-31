@@ -2,13 +2,7 @@
 import { Constants } from '../constants';
 
 const initialState = {
-    // test:5,
-    // response:{},
-    // Postresponse:{},
-    // visibility:false,
-    // divState: null,
-    addanchorEl: null,
-    anchorEl: null,
+
     edit: null,
     formData : [],
     rejected : [],
@@ -25,53 +19,14 @@ const initialState = {
     isRegister :  null,
     isLogin : null,
     token : null,
-    isError : null
+    isError : null,
+    searchData : null,
+    logoutData : null
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        // case Constants.TEST_VALUE:
-        //         return{
-        //             test: action.flag
-        //         }
-        // case Constants.API_CALL_TEST:
-        //         return{
-        //             response: action.response,
-        //         }
-        // case Constants.POST_API_RESPONSE:
-        //         return{
-        //             Postresponse: action.data
-        //         }
-        // case Constants.SHOW_LOADER:
-        //         return{
-        //             visibility:action.visibility
-        //         }
-        // case Constants.HIDE_LOADER:
-        //         return{
-        //             visibility:action.visibility
-        //         }
-        // case Constants.DIV_STATE_TOGGLE:
-        //         return{...state,
-        //             divState: action.divState
-        //         }
-        case Constants.MENU_STATE_TOGGLE:
-                return{...state,
-                    anchorEl: action.anchorEl
-                }
-        case Constants.ADDMENU_STATE_TOGGLE:
-                return{...state,
-                    addanchorEl: action.addanchorEl
-                }
-        case Constants.ADDMENU_STATE_OPEN:
-        console.log("Reducer value: ", action.addanchorEl)
-                return{...state,
-                    addanchorEl: action.addanchorEl
-                }
-        case Constants.MENU_STATE_OPEN:
-        console.log("reducer value: ", action.anchorEl);
-                return{...state,
-                    anchorEl: action.anchorEl
-               }
+       
         case Constants.FORM_TOGGLE:
                return{...state,
                     openForm : action.openForm,
@@ -85,6 +40,10 @@ export default function (state = initialState, action) {
                 return{...state,
                     description: action.description
                 }
+        case Constants.ASSIGN_CHANGE:
+                return{...state,
+                    assignTo: action.assignTo
+                }
         case Constants.STATUS_CHANGE:
                 return{...state,
                     stat: action.stat
@@ -97,6 +56,16 @@ export default function (state = initialState, action) {
         case Constants.FORM_DATA:
                 return{...state,
                     formData : action.formData,
+                    rejected :  action.rejected,
+                    pending :  action.pending,
+                    development :  action.development,
+                    testing :  action.testing,
+                    production: action.production,
+                    
+                }
+        case Constants.SEARCH_DATA:
+                return{...state,
+                    searchData : action.searchData,
                     rejected :  action.rejected,
                     pending :  action.pending,
                     development :  action.development,
@@ -118,7 +87,7 @@ export default function (state = initialState, action) {
         case Constants.RECEIVED_DATA:
                 return {...state,
                     receiveData :  action.receiveData,
-                    isError : action.isError
+                    
                 }
         case Constants.EDIT_TASK:
                 return {...state,
@@ -133,12 +102,12 @@ export default function (state = initialState, action) {
         case Constants.UPDATED_DATA:
                 return {...state,
                     updateData :  action.updateData,
-                    isError : action.isError
+                    
                 }
         case Constants.DELETED_DATA:
                 return {...state,
                     deleteData :  action.deleteData,
-                    isError : action.isError
+                    
                 }
         case Constants.LOGIN:
                 return {...state,
@@ -146,10 +115,14 @@ export default function (state = initialState, action) {
                     token: action.token,
                     isError : action.isError
                 }
+        case Constants.LOGOUT:
+                return {...state,
+                    logoutData :  action.logoutData,
+                }
         case Constants.REGISTER:
                 return {...state,
                     registerData :  action.registerData,
-                    isError : action.isError
+                    
                 }
         case Constants.SHOW_REGISTER:
                 return {...state,

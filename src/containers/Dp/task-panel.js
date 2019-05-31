@@ -7,8 +7,7 @@ import AddTaskForm from './taskForm';
 import { Modal } from 'react-bootstrap';
 import TaskCard from './card';
 import { handleOpen, handleClose, getData} from './actions.js';
-import { set } from 'immutable';
-import { white } from 'material-ui/styles/colors';
+
 
 const button_style = {
     margin: '0px',
@@ -38,35 +37,14 @@ class Task extends React.Component{
     render() {
         console.log("task propsL: ",this.props);
         
-        var taskData;
-        // 
-        // setTimeout(() => {
-            
-        //     this.props.formData ? taskData = this.props.formData.data.map(function(elem){
-        //         console.log("In task panel: " + elem["title"])
-        //         return elem
-        //         }) :
-        //         taskData = null
-        // }, 3000)
-        
         return (
         <div className="wrapper">
-        {/* <header className="clear">
-          <ul>
-            <li>Rejected</li>
-            <li>Pending</li>
-            <li>Development</li>
-            <li>Testing</li>
-            <li>Production</li>
-          </ul>
-          
-        </header> */}
        
         <div class="col-sm-12 abc">
     <div class="row">
       <div class="col-sm-7 five-three">
         <div class="row">
-          <div class="col-sm-4 ">
+          <div class="col-sm-4 q">
           REJECTED
           <hr className="line"></hr>
           <div >
@@ -80,7 +58,7 @@ class Task extends React.Component{
           </div>
           
           </div>
-          <div class="col-sm-4 ">
+          <div class="col-sm-4 w">
           PENDING
           <hr className="line"></hr>
           <div>
@@ -93,7 +71,7 @@ class Task extends React.Component{
         }
           </div>
           </div>
-          <div class="col-sm-4 " style={{textAlign:"center"}}>
+          <div class="col-sm-4 e" style={{textAlign:"center"}}>
           DEVELOPMENT
           <hr className="line"></hr>
           <div>
@@ -110,7 +88,7 @@ class Task extends React.Component{
       </div>
       <div class="col-sm-5 five-two">
         <div class="row">
-          <div class="col-sm-6 ">
+          <div class="col-sm-6 r">
             TESTING
             <hr className="line"></hr>
             <div>
@@ -124,7 +102,7 @@ class Task extends React.Component{
             </div>
             
           </div>
-          <div class="col-sm-6 ">
+          <div class="col-sm-6 t">
           PRODUCTION
           <hr className="line"></hr>
           <div>
@@ -193,36 +171,7 @@ class Task extends React.Component{
 
  </footer>  
 
-        
-          
-          {/* <footer class="page-footer font-small fixed-bottom">
-          <ul>
-            <li>
-            <Button variant="contained"  style= {button_style} onClick={() => {this.props.handleOpen(true, 'REJECTED')}}>
-            <AddIcon style={leftIcon} />
-            Add a task
-            </Button>
-            </li>
-            <li><Button variant="contained"  style= {button_style} onClick={() => {this.props.handleOpen(true, 'PENDING')}}>
-            <AddIcon style={leftIcon} />
-            Add a task
-            
-            </Button></li>
-            <li ><Button variant="contained" style= {button_style} onClick={() => {this.props.handleOpen(true, 'DEVELOPMENT')}}>
-            <AddIcon style={leftIcon} />
-            Add a task
-            </Button></li>
-            <li ><Button variant="contained"  style= {button_style} onClick={() => {this.props.handleOpen(true, 'TESTING')}}>
-            <AddIcon style={leftIcon} />
-            Add a task
-            </Button></li>
-            <li><Button variant="contained"  style= {button_style} onClick={() => {this.props.handleOpen(true, 'PRODUCTION')}}>
-            <AddIcon style={leftIcon} />
-            Add a task
-            </Button></li>
-          </ul>
-          </footer> */}
-        </div>
+    </div>
         
 
 <Modal show={this.props.openForm} onHide={()=>{this.props.handleClose(false)}}>

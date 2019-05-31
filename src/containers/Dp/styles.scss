@@ -31,6 +31,7 @@ $grad-end: #004e92;
 //     font-size: 14px;
 //   }
 .abc {
+
   height: 50;
   background-color: #292C2D;
   text-align: center;
@@ -43,6 +44,17 @@ $grad-end: #004e92;
   color: white;
   margin: 15
 }
+
+.q,
+.w,
+.e,
+.r,
+.t {
+  overflow: auto;
+  height: auto;
+  padding: .5rem;
+}
+
 .line {
   color: #ffffff;
   background-color: #ffffff;

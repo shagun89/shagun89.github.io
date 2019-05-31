@@ -1,12 +1,8 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { handleChangeDesc, handleChangeStatus, handleChangeTitle, handleOnClose, postFormdata, getData, handleClose} from './actions.js';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import { handleChangeDesc, handleChangeStatus, handleChangeAssign, handleChangeTitle, handleOnClose, postFormdata, getData, handleClose} from './actions.js';
 
 const container = {
     display: 'flex',
@@ -61,6 +57,7 @@ class AddTaskForm extends React.Component {
     var data = {
         title : this.props.title,
         description : this.props.description,
+        createdFor : this.props.assignTo,
         status: this.props.status
     }
     this.props.postFormdata(data, this.props.token);
@@ -86,7 +83,6 @@ class AddTaskForm extends React.Component {
           id="standard-name"
           label="Title"
           style={textField}
-        //   value={this.props.title}
           onChange={(event) => this.props.handleChangeTitle(event.target.value)}
           margin="normal"
         />
@@ -99,8 +95,19 @@ class AddTaskForm extends React.Component {
           name="description"
           multiline = {true}
           style={textField}
-        //   value={this.props.description}
           onChange={(event) => this.props.handleChangeDesc(event.target.value)}
+          margin="normal"
+        />
+      </div>
+
+      <div>
+        <TextField
+          required
+          id="standard-uncontrolled"
+          label="Assign To"
+          name="assign"
+          style={textField}
+          onChange={(event) => this.props.handleChangeAssign(event.target.value)}
           margin="normal"
         />
       </div>
@@ -117,8 +124,8 @@ class AddTaskForm extends React.Component {
         />
       </div>
       <div>
-        <Button variant= "contained" color="primary" style={button} type="submit">Save</Button>
-        <Button variant= "contained" color="default" style={button_clear} >Clear All</Button>
+        <Button variant= "contained" style={button} type="submit">Save</Button>
+        <Button color="default" style={button_clear} >Clear All</Button>
         </div>
       </form>
     );
@@ -133,10 +140,10 @@ const mapStateToProps = state => ({
   toggle : state.postReducer.toggle,
   receiveData : state.postReducer.receiveData,
   token: state.postReducer.token,
-  
+  assignTo : state.postReducer.assignTo
 })
 
-export default connect(mapStateToProps, { handleChangeTitle, handleChangeDesc, handleChangeStatus, handleOnClose, postFormdata, getData, handleClose })(AddTaskForm);
+export default connect(mapStateToProps, { handleChangeTitle, handleChangeDesc,handleChangeAssign, handleChangeStatus, handleOnClose, postFormdata, getData, handleClose})(AddTaskForm);
 
-// export default (AddTaskForm);
+
 

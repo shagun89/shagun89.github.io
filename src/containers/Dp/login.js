@@ -47,7 +47,7 @@ render() {
       ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">Error msg</span>}
+          message={<span id="message-id">Invalid Login Credentials</span>}
           action={[
             <IconButton
               key="close"

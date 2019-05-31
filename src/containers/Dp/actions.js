@@ -1,47 +1,8 @@
 import { Constants } from './constants';
-import axios from 'axios';
 import {doHttpPost, doHttpGet, doHttpPut, doHttpDelete} from '../../components/utilities.js';
 import ls from 'local-storage';
 
-export function handleMenuClose(value){
-  return (dispatch) => {
-    dispatch({
-        type : Constants.MENU_STATE_TOGGLE,
-        anchorEl: value
-    });
-}
-}
 
-export function handleAddMenuClose(value){
-  return (dispatch) => {
-    dispatch({
-        type : Constants.ADDMENU_STATE_TOGGLE,
-        addanchorEl: value
-    });
-}
-}
-
-
-
-export function handleAddMenuOpen(value){
-  console.log("Value in action", value)
-  return (dispatch) => {
-    dispatch({
-        type : Constants.ADDMENU_STATE_OPEN,
-        addanchorEl: value
-    });
-}
-}
-
-export function handleProfileMenuOpen(value){
-  console.log("value in action: ",value);
-  return (dispatch) => {
-    dispatch({
-        type : Constants.MENU_STATE_OPEN,
-        anchorEl: value
-    });
-}
-}
 
 export function handleOpen(value, stat){
   console.log("value in action: ",value);
@@ -80,6 +41,16 @@ export function handleChangeDesc(value){
     dispatch({
         type : Constants.DESC_CHANGE,
         description: value
+    });
+}
+}
+
+export function handleChangeAssign(value){
+  console.log("value in changeAssign: ",value);
+  return (dispatch) => {
+    dispatch({
+        type : Constants.ASSIGN_CHANGE,
+        assignTo: value
     });
 }
 }
@@ -280,28 +251,13 @@ export function postFormdata (submitData, token) {
     
 }
 
-
-
-
-// const headers = {
-//   'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFrcml0aSIsImV4cCI6MTU1OTc5ODA4MH0.MUtLs3q6hgO56Nnlj9CYmDyt0yMj6XtvNvy1hUoBKCDKK6Fa23CGRAUk5xAytCAFTctW7Rmhi4itnPdGCNqCVg',
-//   'Access-Control-Allow-Origin': '*',
-//   "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
-// };
-// return (dispatch) => {
-//   axios.get('http://192.168.36.64:8080/user/tasks',{headers})
-//   .then(function(response){
-//     console.log(response.data); // ex.: { user: 'Your User'}
-//     console.log(response.status); // ex.: 200
-//   });
-// }
 }
 
 export function getData(token){
 
   return (dispatch) => {
      var url = 'http://192.168.36.64:8080/user/tasks';
-    //var url = 'https://api.jsonbin.io/b/5cef5fb1b12ce73bdabf323c';
+    
     let options = {
       'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
@@ -346,18 +302,112 @@ export function getData(token){
       development: dev,
       testing: test,
       production: prod,
-      // isError: null
+      
       });
   }, (error) => {
     console.log('Some error occured: ' + error);
-    dispatch({
-      type : Constants.FORM_DATA,
-      // isError: error,
-      
-  });
+    
   })
  }
 }
+
+export function giveOtherTasks(){
+
+  return (dispatch) => {
+    var url = 'http://192.168.36.64:8080/user/other-tasks';
+    let options = {
+      'access_token': ""+ls.get('token'),
+      'Access-Control-Allow-Origin': '*',
+      "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept",
+      
+    }
+
+
+  var promise = doHttpGet(url, options);
+   promise.then((response) => {
+   
+    var rej = [], pend = [], dev = [], test = [], prod = [];
+    response.data.PENDING.forEach(element => {
+      pend.push(element);
+    });
+    response.data.REJECTED.forEach(element => {
+      rej.push(element);
+    });
+    response.data.DEVELOPMENT.forEach(element => {
+      dev.push(element);
+    });
+    response.data.TESTING.forEach(element => {
+      test.push(element);
+    });
+    response.data.PRODUCTION.forEach(element => {
+      prod.push(element);
+    });
+    dispatch({
+      type : Constants.SEARCH_DATA,
+      searchData: response.data,
+      rejected: rej,
+      pending: pend,
+      development: dev,
+      testing: test,
+      production: prod,
+      });
+  }, (error) => {
+    console.log('Some error occured: ' + error);
+  })
+ }
+}
+
+export function searchData(data){
+
+  return (dispatch) => {
+    var url;
+    let options = {
+      'access_token': ""+ls.get('token'),
+      'Access-Control-Allow-Origin': '*',
+      "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept",
+      
+    }
+  console.log("Searched-value: ", data);
+  var searchdata;
+  if(data == 'REJECTED' || data == 'PENDING' || data == 'DEVELOPMENT' || data == 'TESTING'|| data == 'PRODUCTION')
+  { searchdata = {"status": [data]}; url = 'http://192.168.36.64:8080/user/task-filter/status'; }
+  else
+  {searchdata = {"title": data} ; url = 'http://192.168.36.64:8080/user/task-filter/title'; }
+
+  var promise = doHttpPost(url, searchdata, options);
+   promise.then((response) => {
+   
+    var rej = [], pend = [], dev = [], test = [], prod = [];
+    response.data.PENDING.forEach(element => {
+      pend.push(element);
+    });
+    response.data.REJECTED.forEach(element => {
+      rej.push(element);
+    });
+    response.data.DEVELOPMENT.forEach(element => {
+      dev.push(element);
+    });
+    response.data.TESTING.forEach(element => {
+      test.push(element);
+    });
+    response.data.PRODUCTION.forEach(element => {
+      prod.push(element);
+    });
+    dispatch({
+      type : Constants.SEARCH_DATA,
+      searchData: response.data,
+      rejected: rej,
+      pending: pend,
+      development: dev,
+      testing: test,
+      production: prod,
+      });
+  }, (error) => {
+    console.log('Some error occured: ' + error);
+  })
+ }
+}
+
 
 export function updateFormdata (submitData, id, token) {
   console.log("value in action of update task api: ",submitData);
@@ -378,22 +428,17 @@ export function updateFormdata (submitData, id, token) {
       dispatch({
         type : Constants.UPDATED_DATA,
         updateData: response.data,
-        isError: null
+        
     });
     }, (error) => {
       console.log('Some error occured: ' + error);
-      dispatch({
-        type : Constants.UPDATED_DATA,
-        isError: error,
-        
-    });
+      
     })
     
   }
 }
 
 export function deleteFormdata (id, token) {
-  // console.log("value in action of update task api: ",submitData);
   return (dispatch) => {
     var url = 'http://192.168.36.64:8080/user/tasks/' + id;
     let options = {
@@ -408,17 +453,13 @@ export function deleteFormdata (id, token) {
       dispatch({
         type : Constants.DELETED_DATA,
         deleteData: response.data,
-        isError: null
+        
     });
           
    
     }, (error) => {
       console.log('Some error occured: ' + error);
-      dispatch({
-        type : Constants.DELETED_DATA,
-        isError: error,
-        
-    });
+      
     })
     
   }
@@ -475,15 +516,11 @@ export function handleRegisterClick(user, pass) {
       dispatch({
         type : Constants.REGISTER,
         registerData: response,
-        isError : null
+        
     });
     }, (error) => {
       console.log('Some error occured: ' + error);
-      dispatch({
-        type : Constants.REGISTER,
-        isError: error,
-        
-    });
+      
     })
     
   }
@@ -508,3 +545,26 @@ export function showLogin(value){
 }
 }
 
+export function logoutScrum() {
+  
+  return (dispatch) => {
+   
+    var url = 'http://192.168.36.64:8080/user/logout';
+    let options = {
+      'access_token': ""+ls.get('token'),
+      'Access-Control-Allow-Origin': '*',
+      "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
+   }
+    var promise = doHttpGet(url,options);
+    
+    promise.then((response) => {
+      dispatch({
+        type : Constants.LOGOUT,
+        logoutData: response,
+    });
+    }, (error) => {
+      console.log('Some error occured: ' + error)
+    })
+    
+  }
+}
