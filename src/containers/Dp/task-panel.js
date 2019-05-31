@@ -27,6 +27,7 @@ const button = {
      marginTop: '30px'
 }
 
+
 class Task extends React.Component{
 
 
@@ -104,7 +105,6 @@ class Task extends React.Component{
             ''
           }
           </div>
-          
           </div>
         </div>
       </div>

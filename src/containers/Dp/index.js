@@ -52,4 +52,3 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, { handleAddMenuClose, handleMenuClose, handleAddMenuOpen, handleProfileMenuOpen, showRegister})(Dp);
-
