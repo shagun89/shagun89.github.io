@@ -37,7 +37,9 @@ $grad-end: #004e92;
   text-align: center;
   color: white;
   margin-top:35px ;
-  padding-top: 15px
+  padding-top: 15px;
+  overflow: scroll;
+  margin-bottom: 14px;
 }
 .raised {
   background-color: #292C2D !important;
@@ -50,7 +52,9 @@ $grad-end: #004e92;
 .e,
 .r,
 .t {
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
   height: auto;
   padding: .5rem;
 }
@@ -61,7 +65,7 @@ $grad-end: #004e92;
 }
 .page-footer {
   background-color: #292C2D;
-  
+  float: "bottom";
   text-align: center;
   color: white;
   padding-top: 20px
@@ -270,7 +274,8 @@ header {
   }
   
   .wrapper {
-    overflow: hidden;
+    overflow: auto;
+    
   }
   
   

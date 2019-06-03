@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showRegister, searchData, giveOtherTasks, logoutScrum } from './actions.js';
+import { showRegister, searchData, giveOtherTasks, logoutScrum, getData, postFormdata} from './actions.js';
 import './styles.scss';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav';
@@ -25,7 +25,8 @@ class Dp extends Component {
     }
     else
     {
-      this.props.giveOtherTasks();
+      // this.props.giveOtherTasks();
+      this.props.getData(this.props.token, 'http://192.168.36.64:8080/user/other-tasks');
     }
   }
   render() {
@@ -61,6 +62,7 @@ class Dp extends Component {
 
 const mapStateToProps = state => ({
   isRegister : state.postReducer.isRegister,
+  token: state.postReducer.token
 })
 
-export default connect(mapStateToProps, {showRegister, searchData, giveOtherTasks, logoutScrum})(Dp);
+export default connect(mapStateToProps, {showRegister, searchData, giveOtherTasks, logoutScrum, getData, postFormdata})(Dp);

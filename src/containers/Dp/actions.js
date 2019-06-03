@@ -220,15 +220,18 @@ export function handleEditClick(value, selectedElement, allElements){
     
 }
 
-export function postFormdata (submitData, token) {
+export function postFormdata (submitData, getUrl) {
   console.log("value in action: ",submitData);
+  
   return (dispatch) => {
-    var url = 'http://192.168.36.64:8080/user/tasks';
+    
+    var url='http://192.168.36.64:8080/user/tasks';
     let options = {
       'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
   }
+
     var promise = doHttpPost(url, submitData, options);
   
     promise.then((response) => {
@@ -253,10 +256,15 @@ export function postFormdata (submitData, token) {
 
 }
 
-export function getData(token){
+export function getData(token, getUrl, data){
 
   return (dispatch) => {
-     var url = 'http://192.168.36.64:8080/user/tasks';
+    
+
+    if(!getUrl && !data)
+    var url = 'http://192.168.36.64:8080/user/tasks';
+    else
+    var url = getUrl;
     
     let options = {
       'access_token': ""+ls.get('token'),
