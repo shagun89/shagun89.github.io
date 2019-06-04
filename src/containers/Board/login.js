@@ -4,13 +4,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import {handleLoginClick, showLogin} from './actions';
+import {handleLoginClick, showLogin, handleSnack, showRegister} from './actions';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import Dp from './index';
+import Board from './index';
 import ls from 'local-storage';
 
 class Login extends Component {
@@ -23,6 +23,7 @@ constructor(props){
   }
  }
 
+
  handleClose = (event, reason) =>  {
       if (reason === 'clickaway') {
         return;
@@ -33,17 +34,18 @@ constructor(props){
 render() {
    console.log("Iserror: " + this.props.isError)
     return (
-      (ls.get('token'))? <Dp /> : 
+      (ls.get('token'))? <Board /> : 
         
       <div>
-      {this.props.isError && <Snackbar
+      {this.props.isError && 
+      <Snackbar
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left',
       }}
-      open={this.state.open}
+      open={this.props.snackOpen}
       autoHideDuration={6000}
-      onClose={this.handleClose}
+      onClose={() => this.props.handleSnack(false)}
       ContentProps={{
             'aria-describedby': 'message-id',
           }}
@@ -53,19 +55,13 @@ render() {
               key="close"
               aria-label="Close"
               color="inherit"
-              onClick={this.handleClose}
+              onClick={() => this.props.handleSnack(false)}
             >
               <CloseIcon />
             </IconButton>,
           ]}
       
     >
-      {/* <SnackbarContent
-        onClose={this.handleClose}
-        variant="error"
-        message="Login Credentials invalid!!"
-        
-      /> */}
     </Snackbar>
       }
       <div style={{textAlign:"center", margin:"0 auto"}}>
@@ -89,11 +85,21 @@ render() {
                   onChange = {(event,newValue) => this.setState({password:newValue})}
                   />
                   <br/> 
-                  <RaisedButton label="Submit" style={style} onClick={() => {
-                        this.props.handleLoginClick(this.state.username, this.state.password)}
+                  <RaisedButton label="Submit" style={style} onClick={() => {  
+                    this.props.handleLoginClick(this.state.username, this.state.password);
+                    }
                   }
                   />
             </div>
+         </div>
+         <div  style={{ width: 300, paddingTop:50,   margin:"0 auto"}}>
+                New user. 
+                Go to Sign Up.
+                <MuiThemeProvider>
+                <div>
+                    <RaisedButton label="Register" style={style} onClick = {()=> this.props.showRegister(this.props.isRegister)}/>
+                </div>
+                </MuiThemeProvider>
          </div>
          </MuiThemeProvider>
       </div>
@@ -108,6 +114,8 @@ const style = {
 const mapStateToProps = state => ({
       loginData: state.postReducer.loginData ,
       isLogin : state.postReducer.isLogin,
-      isError: state.postReducer.isError
+      isError: state.postReducer.isError,
+      snackOpen : state.postReducer.snackOpen,
+      isRegister : state.postReducer.isRegister
 })
-export default connect(mapStateToProps, { handleLoginClick, showLogin })(Login);
+export default connect(mapStateToProps, { handleLoginClick, showLogin, handleSnack, showRegister })(Login);

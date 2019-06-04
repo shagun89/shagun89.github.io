@@ -62,7 +62,7 @@ class Register extends Component {
                 <div>
                     <RaisedButton label="Login" style={style} onClick = {()=> this.props.showRegister(this.props.isRegister)}/>
                 </div>
-          </MuiThemeProvider>
+                </MuiThemeProvider>
                 </div>
                 </MuiThemeProvider>
          </div>

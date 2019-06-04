@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.scss';
-import { handleExpandClick, handleEditClick, deleteFormdata, getData } from './actions';
+import { handleExpandClick, handleEditClick, deleteFormdata, getData, handleSnack } from './actions';
 import { connect } from 'react-redux';
 import { createMuiTheme, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -20,6 +20,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Modal } from 'react-bootstrap';
 import UpdateTaskForm from './update-form';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
+
 import { black } from 'material-ui/styles/colors';
 
 
@@ -35,7 +38,7 @@ class TaskCard extends React.Component {
           <CardHeader
             avatar={
               <Avatar aria-label="Letter" style={{ backgroundColor: red[500] }}>
-                T
+                {this.props.element.title.charAt(0)}
           </Avatar>
             }
             action={
@@ -44,7 +47,7 @@ class TaskCard extends React.Component {
               </IconButton>
             }
             title={this.props.title}
-            subheader="created At"
+            subheader={Date(this.props.element.createdAt.slice(0,10)).slice(0,15)}
           />
           <CardActions >
             <IconButton aria-label="Update" onClick={() => {this.props.handleEditClick(!this.props.element.editStatus,this.props.element, this.props.formData)}}>
@@ -89,6 +92,33 @@ class TaskCard extends React.Component {
           </Modal.Body>
 
         </Modal>
+        {this.props.isError && 
+            <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            open={this.props.snackOpen}
+            autoHideDuration={6000}
+            onClose={() => this.props.handleSnack(false)}
+            ContentProps={{
+                  'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">{this.props.updateData}</span>}
+                action={[
+                  <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    onClick={() => this.props.handleSnack(false)}
+                  >
+                    <CloseIcon />
+                  </IconButton>,
+                ]}
+            
+          >
+          </Snackbar>
+      }
       </div>
     );
   }
@@ -101,6 +131,8 @@ const mapStateToProps = state => ({
   selectedElement: state.postReducer.selectedElement,
   formData: state.postReducer.formData,
   token: state.postReducer.token,
-
+  isError: state.postReducer.isError,
+  snackOpen : state.postReducer.snackOpen,
+  updateData : state.postReducer.updateData
 })
-export default connect(mapStateToProps, { handleExpandClick, handleEditClick, deleteFormdata, getData })(TaskCard);
+export default connect(mapStateToProps, { handleExpandClick, handleEditClick, deleteFormdata, getData, handleSnack })(TaskCard);

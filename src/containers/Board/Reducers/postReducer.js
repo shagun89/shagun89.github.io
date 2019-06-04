@@ -21,7 +21,8 @@ const initialState = {
     token : null,
     isError : null,
     searchData : null,
-    logoutData : null
+    logoutData : null,
+    snackOpen : null
 };
 
 export default function (state = initialState, action) {
@@ -102,7 +103,7 @@ export default function (state = initialState, action) {
         case Constants.UPDATED_DATA:
                 return {...state,
                     updateData :  action.updateData,
-                    
+                    isError : action.isError
                 }
         case Constants.DELETED_DATA:
                 return {...state,
@@ -132,6 +133,11 @@ export default function (state = initialState, action) {
         case Constants.SHOW_LOGIN:
                 return {...state,
                     isLogin :  action.isLogin,
+                    
+                }
+        case Constants.SNACK:
+                return {...state,
+                    snackOpen :  action.snackOpen,
                     
                 }
         

@@ -21,6 +21,7 @@ export const Constants = keyMirror({
     SHOW_REGISTER : null,
     SHOW_LOGIN : null,
     AUTH_TOKEN : null,
-    LOGOUT: null
+    LOGOUT: null,
+    SNACK : null
 });
 

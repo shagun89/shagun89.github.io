@@ -15,6 +15,15 @@ export function handleOpen(value, stat){
 }
 }
 
+export function handleSnack(value){
+  return (dispatch) => {
+    dispatch({
+        type : Constants.SNACK,
+        snackOpen: value
+    });
+}
+}
+
 export function handleClose(value){
   console.log("value in action: ",value);
   return (dispatch) => {
@@ -225,7 +234,7 @@ export function postFormdata (submitData, getUrl) {
   
   return (dispatch) => {
     
-    var url='http://192.168.36.64:8080/user/tasks';
+    var url='http://13.233.61.121:8000/user/tasks';
     let options = {
       'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
@@ -262,7 +271,7 @@ export function getData(token, getUrl, data){
     
 
     if(!getUrl && !data)
-    var url = 'http://192.168.36.64:8080/user/tasks';
+    var url = 'http://13.233.61.121:8000/user/tasks';
     else
     var url = getUrl;
     
@@ -271,7 +280,8 @@ export function getData(token, getUrl, data){
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
     }
-    console.log("Inside get call token is: " + token)
+  
+
   var promise = doHttpGet(url, options);
    promise.then((response) => {
    
@@ -319,51 +329,6 @@ export function getData(token, getUrl, data){
  }
 }
 
-export function giveOtherTasks(){
-
-  return (dispatch) => {
-    var url = 'http://192.168.36.64:8080/user/other-tasks';
-    let options = {
-      'access_token': ""+ls.get('token'),
-      'Access-Control-Allow-Origin': '*',
-      "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept",
-      
-    }
-
-
-  var promise = doHttpGet(url, options);
-   promise.then((response) => {
-   
-    var rej = [], pend = [], dev = [], test = [], prod = [];
-    response.data.PENDING.forEach(element => {
-      pend.push(element);
-    });
-    response.data.REJECTED.forEach(element => {
-      rej.push(element);
-    });
-    response.data.DEVELOPMENT.forEach(element => {
-      dev.push(element);
-    });
-    response.data.TESTING.forEach(element => {
-      test.push(element);
-    });
-    response.data.PRODUCTION.forEach(element => {
-      prod.push(element);
-    });
-    dispatch({
-      type : Constants.SEARCH_DATA,
-      searchData: response.data,
-      rejected: rej,
-      pending: pend,
-      development: dev,
-      testing: test,
-      production: prod,
-      });
-  }, (error) => {
-    console.log('Some error occured: ' + error);
-  })
- }
-}
 
 export function searchData(data){
 
@@ -378,9 +343,9 @@ export function searchData(data){
   console.log("Searched-value: ", data);
   var searchdata;
   if(data == 'REJECTED' || data == 'PENDING' || data == 'DEVELOPMENT' || data == 'TESTING'|| data == 'PRODUCTION')
-  { searchdata = {"status": [data]}; url = 'http://192.168.36.64:8080/user/task-filter/status'; }
+  { searchdata = {"status": [data]}; url = 'http://13.233.61.121:8000/user/task-filter/status'; }
   else
-  {searchdata = {"title": data} ; url = 'http://192.168.36.64:8080/user/task-filter/title'; }
+  {searchdata = {"title": data} ; url = 'http://13.233.61.121:8000/user/task-filter/title'; }
 
   var promise = doHttpPost(url, searchdata, options);
    promise.then((response) => {
@@ -411,6 +376,7 @@ export function searchData(data){
       production: prod,
       });
   }, (error) => {
+    alert("error occured");
     console.log('Some error occured: ' + error);
   })
  }
@@ -420,7 +386,7 @@ export function searchData(data){
 export function updateFormdata (submitData, id, token) {
   console.log("value in action of update task api: ",submitData);
   return (dispatch) => {
-    var url = 'http://192.168.36.64:8080/user/tasks/' + id;
+    var url = 'http://13.233.61.121:8000/user/tasks/' + id;
     let options = {
       'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
@@ -430,17 +396,22 @@ export function updateFormdata (submitData, id, token) {
     var promise = doHttpPut(url, submitData, options);
   
     promise.then((response) => {
-      
       console.log("UPDATE SUCCESSFUL: "+response.data);
       this.getData(ls.get('token'));
       dispatch({
         type : Constants.UPDATED_DATA,
         updateData: response.data,
-        
+        isError : null
     });
     }, (error) => {
-      console.log('Some error occured: ' + error);
-      
+      console.log('Some error occured: ' + error.response.data.message);
+      debugger;
+      this.handleSnack(true)
+      dispatch({
+        type : Constants.UPDATED_DATA,
+        updateData: error.response.data.message,
+        isError : error
+    });
     })
     
   }
@@ -448,7 +419,7 @@ export function updateFormdata (submitData, id, token) {
 
 export function deleteFormdata (id, token) {
   return (dispatch) => {
-    var url = 'http://192.168.36.64:8080/user/tasks/' + id;
+    var url = 'http://13.233.61.121:8000/user/tasks/' + id;
     let options = {
       'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
@@ -479,7 +450,7 @@ export function handleLoginClick(user, pass) {
     var data = {
       "credentials":Buffer.from(user + ":" + pass).toString('base64')
     }
-    var url = 'http://192.168.36.64:8080/login';
+    var url = 'http://13.233.61.121:8000/login';
     let options = {
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
@@ -497,6 +468,7 @@ export function handleLoginClick(user, pass) {
     });
     }, (error) => {
       console.log('Some error occured: ' + error);
+      this.handleSnack(true);
       dispatch({
         type : Constants.LOGIN,
         isError: error,
@@ -513,7 +485,7 @@ export function handleRegisterClick(user, pass) {
   }
   console.log("Register data: ", data);
   return (dispatch) => {
-    var url = 'http://192.168.36.64:8080/user/sign-up';
+    var url = 'http://13.233.61.121:8000/user/sign-up';
     let options = {
       'Access-Control-Allow-Origin': '*',
       "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept"
@@ -557,7 +529,7 @@ export function logoutScrum() {
   
   return (dispatch) => {
    
-    var url = 'http://192.168.36.64:8080/user/logout';
+    var url = 'http://13.233.61.121:8000/user/logout';
     let options = {
       'access_token': ""+ls.get('token'),
       'Access-Control-Allow-Origin': '*',
@@ -566,6 +538,7 @@ export function logoutScrum() {
     var promise = doHttpGet(url,options);
     
     promise.then((response) => {
+      this.showRegister(false);
       dispatch({
         type : Constants.LOGOUT,
         logoutData: response,

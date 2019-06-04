@@ -140,56 +140,6 @@ class Task extends React.Component {
                     </Modal>
 
                 </div>
-                <div>
-                    <footer class="page-footer font-small fixed-bottom">
-
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <div class="col-sm-7 five-three">
-                                    <div class="row">
-                                        <div class="col-sm-4 ">
-                                            <Button variant="contained" onClick={() => { this.props.handleOpen(true, 'REJECTED') }}>
-                                                <AddIcon style={leftIcon} />
-                                                Add a task
-                                    </Button>
-                                        </div>
-                                        <div class="col-sm-4 ">
-                                            <Button variant="contained" onClick={() => { this.props.handleOpen(true, 'PENDING') }}>
-                                                <AddIcon style={leftIcon} />
-                                                Add a task
-                                    </Button>
-                                        </div>
-                                        <div class="col-sm-4 " style={{ textAlign: "center" }}>
-                                            <Button variant="contained" onClick={() => { this.props.handleOpen(true, 'DEVELOPMENT') }}>
-                                                <AddIcon style={leftIcon} />
-                                                Add a task
-                                    </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-5 five-two">
-                                    <div class="row">
-                                        <div class="col-sm-6 ">
-                                            <Button variant="contained" onClick={() => { this.props.handleOpen(true, 'TESTING') }}>
-                                                <AddIcon style={leftIcon} />
-                                                Add a task
-                                    </Button>
-                                        </div>
-                                        <div class="col-sm-6 ">
-                                            <Button variant="contained" onClick={() => { this.props.handleOpen(true, 'PRODUCTION') }}>
-                                                <AddIcon style={leftIcon} />
-                                                Add a task
-                                    </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </footer>
-
-                </div>
             </div>
         );
     }
